@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema version="1.1" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="DateYYYYMMDD">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="([0-9]\d{3}((0[1-9]|1[012])(0[1-9]|1\d|2[0-8])|(0[13456789]|1[012])(29|30)|(0[13578]|1[02])31)|(15(8[48]|9[26])|(1[6-9]|[2-9]\d)(0[48]|[13579][26]|[2468][048])|([2468][048]|16|3579[26])00)0229)" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="DateYYYY">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[1,2]\d{3}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  <xsd:simpleType name="MobileNumber">
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="05\d{8}" />
+    </xsd:restriction>
+  </xsd:simpleType>
+ <xsd:simpleType name="PhoneNumber"> 
+ <xsd:restriction base="xsd:string">
+      <xsd:pattern value="05\d{8}|0[234789]\d{7}|07[2346789]\d{7}" />
+ </xsd:restriction> 
+ </xsd:simpleType>
+  <xsd:simpleType name="EmailFormat">
+    <xsd:restriction base="xsd:string">
+     <xsd:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\.[a-zA-Z0-9\-_]+){0,1}" />
+      <xsd:minLength value="4"/>
+      <xsd:maxLength value="70"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="HebrewString">
+    <xsd:restriction base="xsd:string">
+<xsd:pattern value="['׳א-ת\s()&quot;-]+"/> 
+        <xsd:minLength value="2"/>
+        <xsd:maxLength value="30"/>
+    </xsd:restriction>
+</xsd:simpleType>
+  <xsd:element name="EmploymentTerminationInterface">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="InterfaceBody" minOccurs="1">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="AddressingEntity" minOccurs="1" maxOccurs="1">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="EmployerDetails" minOccurs="1" maxOccurs="1">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="EmployerDeductionFileNumber" minOccurs="1">
+                            <xsd:annotation>
+                              <xsd:documentation>
+                                תיק ניכויים מעסיק
+                              </xsd:documentation>
+                            </xsd:annotation>
+                            <xsd:simpleType>
+                              <xsd:restriction base="xsd:string">
+                                <xsd:pattern value="9\d{8}"/>
+                                <xsd:minLength value="9"/>
+                                <xsd:maxLength value="9"/>
+                              </xsd:restriction>
+                            </xsd:simpleType>
+                          </xsd:element>
+                          <xsd:element name="ContactMobileNumber" minOccurs="1" type="PhoneNumber">
+                            <xsd:annotation>
+                              <xsd:documentation>
+                                טלפון נייד של איש הקשר אצל המעסיק
+                              </xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          <xsd:element name="ContactEmail" minOccurs="0" maxOccurs="1" type="EmailFormat">
+                            <xsd:annotation>
+                              <xsd:documentation>
+                                כתובת דוא"ל של איש הקשר אצל המעסיק
+                              </xsd:documentation>
+                            </xsd:annotation>
+                          </xsd:element>
+                          
+                          <xsd:element name="EmployeeList" minOccurs="0" maxOccurs="1">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="EmployeeDetails" minOccurs="1" maxOccurs="1">
+                                  <xsd:complexType>
+                                    <xsd:sequence>
+
+                                      <!-- חלק א׳1 - התחלה -->
+                                      <xsd:element name="EmployeeIdNumber" minOccurs="1" maxOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            מספר מזהה עובד
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:string">
+                                            <xsd:minLength value="9" />
+                                            <xsd:maxLength value="9" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                                      <xsd:element name="FirstName" minOccurs="1" maxOccurs="1" type="HebrewString">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            שם פרטי
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                      </xsd:element>
+                                      <xsd:element name="LastName" minOccurs="1" maxOccurs="1" type="HebrewString">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            שם משפחה 
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                      </xsd:element> 	  
+                                          <xsd:element name="EmployeeContactDetails" minOccurs="1" maxOccurs="1">
+                                        <xsd:complexType>
+                                         <xsd:sequence>
+                                            <xsd:element name="EmployeeMobileNumber" minOccurs="0" maxOccurs="1" type="PhoneNumber">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+                                                      טלפון סלולארי
+                                                </xsd:documentation>
+                                              </xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element name="EmployeeEmail" minOccurs="0" maxOccurs="1" type="EmailFormat">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+                                                      כתובת דוא"ל
+                                                </xsd:documentation>
+                                              </xsd:annotation>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element> 	  
+                                      <xsd:element name="HolderOfControllingInterest" minOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            בעל שליטה
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:int">
+                                            <xsd:enumeration value="1" />
+                                            <xsd:enumeration value="2" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                                      <xsd:element name="RelativeHolderOfControllingInterest" minOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            קרוב של בעל שליטה
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:int">
+                                            <xsd:enumeration value="1" />
+                                            <xsd:enumeration value="2" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                                      <!-- חלק א׳1 - סיום -->
+
+                                      <!-- חלק א׳3 - התחלה -->
+                                      <xsd:element name="RetirmentReason" minOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            סיבת פרישה
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:int">
+                                            <xsd:enumeration value="1" />
+                                            <xsd:enumeration value="2" />
+                                            <xsd:enumeration value="3" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                               
+                                      <!-- חלק א׳3 - סיום -->
+
+                                      <!-- חלק א׳4 תקופת העבודה - התחלה -->
+                                      <xsd:element name="EmploymentPeriod" minOccurs="1" maxOccurs="1">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="EmploymentStartDate" minOccurs="1" maxOccurs="1" type="DateYYYYMMDD">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+                                                  תאריך התחלת העסקה
+                                                </xsd:documentation>
+                                              </xsd:annotation>
+                                            </xsd:element>
+                                            <xsd:element name="EmploymentRetirementDate" minOccurs="1" maxOccurs="1" type="DateYYYYMMDD">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+                                                  תאריך פרישה
+                                                </xsd:documentation>
+                                              </xsd:annotation>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳4 תקופת העבודה - סיום -->
+
+                                      <!-- חלק א׳5 תקופות עבודה לא רציפות / שינויים בשיעורי משרה / הפחתות שכר - התחלה -->
+                                      <xsd:element name="NonConsecutiveWorkPeriods" minOccurs="0" maxOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            בלוק חובה מותנית - תקופות העסקה לא רציפות
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="WorkPeriod" minOccurs="1" maxOccurs="100">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+                                                  תקופת העסקה
+                                                </xsd:documentation>
+                                              </xsd:annotation>
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="WorkPeriodStartDate" minOccurs="1" maxOccurs="1" type="DateYYYYMMDD">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תאריך התחלת העסקה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:element>
+                                                  <xsd:element name="WorkPeriodEndDate" minOccurs="1" maxOccurs="1" type="DateYYYYMMDD">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תאריך סיום העסקה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:element>
+                                                  <xsd:element name="WorkPeriodEmploymentRate" minOccurs="0" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        שיעור המשרה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="3" /> 
+                                                        <xsd:minInclusive value="1" />
+                                                        <xsd:maxInclusive value="300" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="WorkPeriodLastSalary" minOccurs="0" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        משכורת אחרונה לתקופה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="7" />
+                                                        <xsd:minInclusive value="0" />
+														
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳5 תקופות עבודה לא רציפות / שינויים בשיעורי משרה / הפחתות שכר - סיום --> 
+                                      <!-- חלק א׳6 - התחלה -->
+                                      <xsd:element name="FullLastSalaryBeforeRetirement" minOccurs="1" maxOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            משכורת חודשית אחרונה מלאה לפני הפרישה
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:int">
+                                            <xsd:totalDigits value="7" />
+                                            <xsd:minInclusive value="1" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                                      <xsd:element name="LastInsuredSalary" minOccurs="1" maxOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            משכורת מבוטחת אחרונה
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:int">
+                                            <xsd:totalDigits value="7" />
+                                            <xsd:minInclusive value="1" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                                      <xsd:element name="SeveranceSalary" minOccurs="1" maxOccurs="1">
+                                        <xsd:annotation>
+                                          <xsd:documentation>
+                                            שכר עבודה לחבות פיצויים- תקנות פיצויי פיטורין
+                                          </xsd:documentation>
+                                        </xsd:annotation>
+                                        <xsd:simpleType>
+                                          <xsd:restriction base="xsd:int">
+                                            <xsd:totalDigits value="7" />
+                                            <xsd:minInclusive value="1" />
+                                          </xsd:restriction>
+                                        </xsd:simpleType>
+                                      </xsd:element>
+                                      <!-- חלק א׳6 - סיום -->
+
+                                      <!-- חלק א׳7 - התחלה -->
+                                      <xsd:element name="BudgetaryPension" minOccurs="0" maxOccurs="1">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="EntitlementDate" type="DateYYYYMMDD" minOccurs="1" maxOccurs="1"/>
+                                            <xsd:element name="SalaryForBudgetaryPensionCalculation" minOccurs="1" maxOccurs="1">
+                                              <xsd:annotation>
+                                                <xsd:documentation>
+                                                  משכורת לפיה מחושבת הפנסיה התקציבית
+                                                </xsd:documentation>
+                                              </xsd:annotation>
+                                              <xsd:simpleType>
+                                                <xsd:restriction base="xsd:int">
+                                                  <xsd:totalDigits value="9" />
+                                                  <xsd:minInclusive value="1" />
+                                                </xsd:restriction>
+                                              </xsd:simpleType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳7 - סיום -->
+                                      
+
+                                      <!-- חלק א׳8 - התחלה -->
+                                      <xsd:element name="RetirementInstallmentsGrant" minOccurs="0" maxOccurs="1">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Grant" minOccurs="1" maxOccurs="6">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="PaymentTaxYear" minOccurs="1" maxOccurs="1" type="DateYYYY">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תאריך תשלום
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:element>
+                                                  <xsd:element name="PaymentAmount" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        סכום לתשלום
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="9" />
+                                                        <xsd:minInclusive value="1" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳8 - סיום -->
+
+                                      <!-- חלק א׳9 - התחלה -->
+                                      <xsd:element name="NonTaxExemptGrants" minOccurs="1" maxOccurs="1">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Grant" minOccurs="1" maxOccurs="10">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="PayerName" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        שם משלם
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:string">
+                                                        <xsd:maxLength value="100" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="NonTaxExemptPayerDeductionFileNumber" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תיק ניכויים משלם
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:string">
+                                                        <xsd:pattern value="9\d{8}"/>
+                                                        <xsd:minLength value="9"/>
+                                                        <xsd:maxLength value="9"/>
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="PayerTypeCode" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        קוד המשלם
+                                                        אחד מן הערכים הבאים:
+                                                        1 = המעסיק
+                                                        2 = מנהל הגמלאות (פנסיה תקציבית של עובדי מדינה)
+                                                        3 = קופה מרכזית לפיצויים (כולל המוסד לביטוח לאומי המשלם מענק בעקבות פירוק או פשיטת רגל)
+                                                        4 = קופה אישית לפיצויים כולל קופת ביטוח 
+                                                        5 = קופת פנסיה וותיקה
+                                                        6 = קופת פנסיה חדשה מ-1995 וקופת ביטוח לקצבה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:enumeration value="1" />
+                                                        <xsd:enumeration value="2" />
+                                                        <xsd:enumeration value="3" />
+                                                        <xsd:enumeration value="4" />
+                                                        <xsd:enumeration value="5" />
+                                                        <xsd:enumeration value="6" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="PaymentType" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        סוג התשלום
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:enumeration value="20" />
+                                                        <xsd:enumeration value="22" />
+                                                        <xsd:enumeration value="23" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+
+                                                  <xsd:element name="FirstDepositDate" minOccurs="1" maxOccurs="1" type="DateYYYYMMDD">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תאריך הפקדה ראשון לקופה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:element>
+                                                  <xsd:element name="LastDepositDate" minOccurs="0" maxOccurs="1" type="DateYYYYMMDD">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תאריך הפקדה אחרון לקופה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:element>
+                                                  <xsd:element name="AmountForRetirementDay" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        הסכום ליום הפרישה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="8" />
+                                                        <xsd:minInclusive value="1" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="AdditionalAccumulation" minOccurs="0" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        הסכום לצבירה נוספת
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="8" />
+                                                        <xsd:minInclusive value="0" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳9 - סיום -->
+
+                                      <!-- חלק א׳10 - התחלה -->
+                                      <xsd:element name="TaxExemptGrants" minOccurs="0" maxOccurs="1">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Grant" minOccurs="1" maxOccurs="10">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="PayerName" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        שם משלם
+                                                        יש לציין את השם המלא של המשלם. "משלם" הוא כל מי שמשלם או עתיד לשלם תשלום בגין פרישה. 
+                                                        אותיות ומספרים מיוחדים.
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:string">
+                                                        <xsd:maxLength value="100" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="TaxExemptPayerDeductionFileNumber" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תיק ניכויים משלם
+                                                        יש לציין את המספר המלא של תיק הניכויים של המשלם.
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:string">
+                                                        <xsd:pattern value="9\d{8}"/>
+                                                        <xsd:minLength value="9"/>
+                                                        <xsd:maxLength value="9"/>
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="NominalDeductiblePaymentAmount" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        הסכום שחוייב בשווי
+                                                        נומרי חוקי &gt;  0.
+                                                        בשדה זה יש למלא את סך התשלומים שהעובד חוייב במס בין אם מדובר בהפקדות שוטפות שחוייבו במס בהתאם לסעיף 3 (ה3) (1א) לפקודה 
+                                                        ובין אם מדובר בהפקדות חד פעמיות אשר נעשו במהלך תקופת עבודתו ו/או בסמוך לפרישת העובד וחוייבו במס בהתאם לסעיף 3 (ה3) (1ב) את סך התשלומים יש לציין במונחים נומינאליים.
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="9" />
+                                                        <xsd:minInclusive value="1" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="RealDeductiblePaymentAmount" minOccurs="0" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                     <xsd:documentation>
+                                                        הסכום שחוייב בשווי שנצבר ליום הפרישה לרבות רווחים
+                                                        נומרי חוקי &gt;  0.
+                                                        בשדה זה יש למלא את סך התשלומים שהעובד חוייב במס בין אם מדובר בהפקדות שוטפות שחוייבו במס בהתאם לסעיף 3 (ה3) (1א) לפקודה
+                                                        ובין אם מדובר בהפקדות חד פעמיות אשר נעשו במהלך תקופת עבודתו ו/או בסמוך לפרישת העובד וחוייבו במס בהתאם לסעיף 3 (ה3) (1ב). 
+                                                        את סך התשלומים יש לציין במונחים ראליים.
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="9" />
+                                                        <xsd:minInclusive value="1" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳10 - סיום -->
+                                      
+                                      <!-- חלק א׳11 - התחלה -->
+                                      <xsd:element name="PreRetirementPension" minOccurs="0" maxOccurs="1">
+                                        <xsd:complexType>
+                                          <xsd:sequence>
+                                            <xsd:element name="Grant" minOccurs="1" maxOccurs="5">
+                                              <xsd:complexType>
+                                                <xsd:sequence>
+                                                  <xsd:element name="PayerName" minOccurs="1" maxOccurs="1">
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:string">
+                                                        <xsd:maxLength value="100" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="PreRetirementPensionPayerDeductionFileNumber" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        תיק ניכויים מעסיק
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:string">
+                                                        <xsd:pattern value="9\d{8}"/>
+                                                        <xsd:minLength value="9"/>
+                                                        <xsd:maxLength value="9"/>
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="PayerTypeCode" minOccurs="1" maxOccurs="1" >
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        קוד המשלם
+                                                        אחד מן הערכים הבאים:
+                                                        5 = קופת פנסיה וותיקה
+                                                        6 = קופת פנסיה חדשה מ-1995 וקופת ביטוח לקצבה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:enumeration value="5" />
+                                                        <xsd:enumeration value="6" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>  
+                                                  <xsd:element name="PensionConversionDate" minOccurs="1" maxOccurs="1" type="DateYYYYMMDD">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        חודש המרה לקצבה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                  </xsd:element>
+                                                  <xsd:element name="PensionAmount" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        סכום הקצבה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="6" />
+                                                        <xsd:minInclusive value="1" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                  <xsd:element name="ConvertionAmountBallance" minOccurs="1" maxOccurs="1">
+                                                    <xsd:annotation>
+                                                      <xsd:documentation>
+                                                        סכום הקצבה
+                                                      </xsd:documentation>
+                                                    </xsd:annotation>
+                                                    <xsd:simpleType>
+                                                      <xsd:restriction base="xsd:int">
+                                                        <xsd:totalDigits value="9" />
+                                                        <xsd:minInclusive value="1" />
+                                                      </xsd:restriction>
+                                                    </xsd:simpleType>
+                                                  </xsd:element>
+                                                </xsd:sequence>
+                                              </xsd:complexType>
+                                            </xsd:element>
+                                          </xsd:sequence>
+                                        </xsd:complexType>
+                                      </xsd:element>
+                                      <!-- חלק א׳11 - סיום -->
+
+                                      
+                                    </xsd:sequence>
+                                  </xsd:complexType>
+                                </xsd:element>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

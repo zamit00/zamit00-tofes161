@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<EmploymentTerminationInterface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InterfaceBody>
+    <AddressingEntity>
+      <EmployerDetails>
+      
+        <!-- ׳—׳׳§ ׳׳³2 - ׳”׳×׳—׳׳” -->
+        <EmployerDeductionFileNumber>999999999</EmployerDeductionFileNumber>
+        <ContactMobileNumber>0504142500</ContactMobileNumber>
+		<ContactEmail>bb@bb.bb</ContactEmail>
+        <!-- ׳—׳׳§ ׳׳³2 - ׳¡׳™׳•׳ -->
+
+        <EmployeeList>
+          <EmployeeDetails>
+            <!-- ׳—׳׳§ ׳׳³1 - ׳”׳×׳—׳׳” -->
+            <EmployeeIdNumber>111111111</EmployeeIdNumber>
+            <FirstName>׳™׳©׳¨׳׳</FirstName>
+            <LastName>׳™׳©׳¨׳׳׳™</LastName>
+			<EmployeeContactDetails>
+			<EmployeeMobileNumber>0504148858</EmployeeMobileNumber>
+			<EmployeeEmail>aa@aa.aa</EmployeeEmail>
+			</EmployeeContactDetails>
+            <HolderOfControllingInterest>2</HolderOfControllingInterest>
+            <RelativeHolderOfControllingInterest>2</RelativeHolderOfControllingInterest>
+            <!-- ׳—׳׳§ ׳׳³1 - ׳¡׳™׳•׳-->
+
+            <!-- ׳—׳׳§ ׳׳³3 - ׳”׳×׳—׳׳” -->
+            <RetirmentReason>1</RetirmentReason>
+            <!-- ׳—׳׳§ ׳׳³3 - ׳¡׳™׳•׳ -->
+
+            <!-- ׳—׳׳§ ׳׳³4 - ׳”׳×׳—׳׳” -->
+            <EmploymentPeriod>
+              <EmploymentStartDate>20140805</EmploymentStartDate>
+              <EmploymentRetirementDate>20230805</EmploymentRetirementDate>
+            </EmploymentPeriod>
+            <!-- ׳—׳׳§ ׳׳³4 - ׳¡׳™׳•׳ -->
+
+
+            <!-- ׳—׳׳§ ׳׳³5 - ׳”׳×׳—׳׳” -->
+            <NonConsecutiveWorkPeriods>
+          
+           
+              <WorkPeriod>
+                <WorkPeriodStartDate>20140805</WorkPeriodStartDate>
+                <WorkPeriodEndDate>20220805</WorkPeriodEndDate>
+		      <WorkPeriodEmploymentRate>110</WorkPeriodEmploymentRate>
+			  <WorkPeriodLastSalary>1121</WorkPeriodLastSalary>
+
+              </WorkPeriod> 
+ <WorkPeriod>
+                <WorkPeriodStartDate>20220905</WorkPeriodStartDate>
+                <WorkPeriodEndDate>20230805</WorkPeriodEndDate>
+				<WorkPeriodEmploymentRate>140</WorkPeriodEmploymentRate>
+				<WorkPeriodLastSalary>1232</WorkPeriodLastSalary>
+
+
+              </WorkPeriod> 			  
+			
+            </NonConsecutiveWorkPeriods>
+             <!-- ׳—׳׳§ ׳׳³5 - ׳¡׳™׳•׳ -->
+              
+            <!-- ׳—׳׳§ ׳׳³6 - ׳”׳×׳—׳׳” -->
+            <FullLastSalaryBeforeRetirement>15000</FullLastSalaryBeforeRetirement>
+            <LastInsuredSalary>14000</LastInsuredSalary>
+            <SeveranceSalary>14000</SeveranceSalary>
+            <!-- ׳—׳׳§ ׳׳³6 - ׳¡׳™׳•׳ -->
+
+            <!-- ׳—׳׳§ ׳׳³7 - ׳”׳×׳—׳׳” -->
+               <BudgetaryPension>
+              <EntitlementDate>20231109</EntitlementDate>
+              <SalaryForBudgetaryPensionCalculation>333</SalaryForBudgetaryPensionCalculation>
+            </BudgetaryPension> 
+            <!-- ׳—׳׳§ ׳׳³7 - ׳¡׳™׳•׳ -->
+            
+            <!-- ׳—׳׳§ ׳׳³8 - ׳”׳×׳—׳׳” --> 
+              <RetirementInstallmentsGrant>
+              <Grant>
+                <PaymentTaxYear>2024</PaymentTaxYear>
+                <PaymentAmount>3333</PaymentAmount>
+              </Grant>
+              <Grant>
+                <PaymentTaxYear>2025</PaymentTaxYear>
+                <PaymentAmount>3333</PaymentAmount>
+              </Grant>
+            </RetirementInstallmentsGrant> 
+            <!-- ׳—׳׳§ ׳׳³8 - ׳¡׳™׳•׳ -->
+
+            <!-- ׳—׳׳§ ׳׳³9 - ׳”׳×׳—׳׳” -->
+            <NonTaxExemptGrants>
+             
+              
+               <Grant>
+                <PayerName>׳©׳ ׳׳©׳׳</PayerName>
+                <NonTaxExemptPayerDeductionFileNumber>999999999</NonTaxExemptPayerDeductionFileNumber>
+                <PayerTypeCode>1</PayerTypeCode>
+                <PaymentType>20</PaymentType>
+                <FirstDepositDate>20230810</FirstDepositDate>
+                <LastDepositDate>20220412</LastDepositDate>
+                <AmountForRetirementDay>105223</AmountForRetirementDay>
+                <AdditionalAccumulation>0</AdditionalAccumulation>
+              </Grant>
+            </NonTaxExemptGrants>
+            <!-- ׳—׳׳§ ׳׳³9 - ׳¡׳™׳•׳ -->
+
+            <!-- ׳—׳׳§ ׳׳³10 - ׳”׳×׳—׳׳”  -->
+             <TaxExemptGrants>
+              <Grant>
+                <PayerName>׳©׳ ׳׳©׳׳</PayerName>
+                <TaxExemptPayerDeductionFileNumber>999999999</TaxExemptPayerDeductionFileNumber>
+                <NominalDeductiblePaymentAmount>13268</NominalDeductiblePaymentAmount>
+                <RealDeductiblePaymentAmount>13268</RealDeductiblePaymentAmount>
+
+              </Grant>
+            </TaxExemptGrants> 
+            <!-- ׳—׳׳§ ׳׳³10 - ׳¡׳™׳•׳ -->
+
+            <!-- ׳—׳׳§ ׳׳³11 - ׳”׳×׳—׳׳”  --> 
+            <PreRetirementPension>
+              <Grant>
+                <PayerName>׳©׳ ׳׳©׳׳</PayerName>
+				
+                <PreRetirementPensionPayerDeductionFileNumber>999999999</PreRetirementPensionPayerDeductionFileNumber>
+                <PayerTypeCode>5</PayerTypeCode>
+                <PensionConversionDate>20230805</PensionConversionDate>
+                <PensionAmount>4000</PensionAmount>
+                <ConvertionAmountBallance>4000</ConvertionAmountBallance>
+              </Grant>
+            </PreRetirementPension>  
+            <!-- ׳—׳׳§ ׳׳³11 - ׳¡׳™׳•׳ -->
+
+
+          </EmployeeDetails>
+        </EmployeeList>
+      </EmployerDetails>
+    </AddressingEntity>
+  </InterfaceBody>
+</EmploymentTerminationInterface>

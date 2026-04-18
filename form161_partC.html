@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טופס 161 - חלק ג' - חישוב המעסיק, הנחיות לקופות הגמל ודגשים לעובד</title>
+    <link rel="stylesheet" href="vendor/sweetalert2/dist/sweetalert2.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header img {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.5em;
+            font-weight: 700;
+            opacity: 1;
+            margin-top: 15px;
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .page-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.9em;
+            color: white;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .form-section {
+            padding: 30px;
+            border-bottom: 1px solid #888;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2a5298;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            padding: 12px;
+            border: 2px solid #888;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        input.error {
+            border-color: #e74c3c;
+        }
+
+        .alternative-section {
+            background: #f8f9fa;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border: 2px solid #888;
+        }
+
+        .alternative-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alternative-title input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .alternative-content {
+            margin-right: 30px;
+        }
+
+        .condition-item {
+            margin-bottom: 12px;
+            padding-right: 20px;
+            line-height: 1.6;
+        }
+
+        .condition-item strong {
+            color: #1e3c72;
+        }
+
+        .guidelines-box {
+            background: white;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+            border-right: 4px solid #2a5298;
+        }
+
+        .guidelines-box h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .guidelines-box p {
+            line-height: 1.6;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 30px;
+            padding-right: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #888;
+            background: white;
+        }
+
+        table th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #666;
+        }
+
+        table td {
+            padding: 12px;
+            border: 1px solid #888;
+            text-align: center;
+        }
+
+        table input[type="number"] {
+            width: 100%;
+            border: 1px solid #666;
+            padding: 8px;
+            text-align: center;
+        }
+
+        table input[type="number"]:disabled {
+            background: #d0d0d0;
+            cursor: not-allowed;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header img {
+                position: static;
+                transform: none;
+                margin-bottom: 15px;
+            }
+
+            .header-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .alternative-content {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="position: relative;">
+        <div class="page-number">דף 4 מתוך 4</div>
+        <div class="header">
+            <img alt="" src="michpal-removebg-preview.png" width="120px">
+                <div class="header-content">        
+                <h1>טופס 161 - הודעה על פרישה מעבודה</h1>
+                <p style="font-size: 1.5em; font-weight: 700; margin-top: 15px; opacity: 1;">חלק ג' - חישוב המעסיק, הנחיות לקופות הגמל ודגשים לעובד</p>
+            </div>
+        </div>
+
+        <!-- מספר זהות מתחת ל-header -->
+        <div class="form-section" style="padding: 20px 30px; border-bottom: 1px solid #888;">
+            <div class="employee-id-section" style="display: flex; align-items: center; gap: 10px; justify-content: flex-start; direction: ltr;">
+                <input type="text" id="employeeIdPartC" name="employeeIdPartC" 
+                       pattern="\d{9}" maxlength="9" inputmode="numeric" 
+                       style="width: 150px; border: 2px solid #888; padding: 8px; border-radius: 8px;">
+                <span class="error-message" style="display: none; color: #e74c3c; font-size: 0.85em;">מספר זהות חייב להיות 9 ספרות בלבד</span>
+                <label for="employeeIdPartC" style="font-weight: 600; margin: 0;">מספר זהות:</label>
+            </div>
+        </div>
+
+        <form id="form161PartC" novalidate>
+            <!-- חלק ג.1 - סיכום בחירת העובד ומתן הנחיות לקופות -->
+            <div class="form-section">
+                <h2 class="section-title">ג.1 - סיכום בחירת העובד ומתן הנחיות לקופות</h2>
+
+                <!-- חלופה א' -->
+                <div class="alternative-section">
+                    <div class="alternative-title">
+                        <input type="checkbox" id="alternativeA" name="alternativeA" form="form161PartC">
+                        <label for="alternativeA" style="margin: 0; cursor: pointer;">חלופה א'</label>
+                    </div>
+                    <div class="alternative-content">
+                        <p style="margin-bottom: 15px; font-weight: 600;">
+                            העובד לא העביר למעסיק את חלק ב' ובנוסף, התקיימו שני התנאים שלהלן:
+                        </p>
+                        <div class="condition-item">
+                            <strong>1.</strong> סך כל הסכומים שהופקדו בקופות הגמל לרצף קצבה, לא עולים על תקרת "רצף קצבה ברירת מחדל" (לפי סעיף 9(א)(7א) לפקודה).
+                        </div>
+                        <div class="condition-item">
+                            <strong>2.</strong> מעבר לסכומים אלה, העובד אינו זכאי למענק פיצויים נוסף ממשלם שאינו קופת גמל לקצבה.
+                        </div>
+                        <div class="guidelines-box">
+                            <h4>הנחיות לקופות -</h4>
+                            <p>יש לנהוג בסכומים לרצף קצבה, אלא אם כן הוצגה תעודה מרשות המסים הקובעת אחרת.</p>
+                        </div>
+                        <div class="guidelines-box" style="margin-top: 15px; border-right-color: #27ae60;">
+                            <h4>דגשים לעובד -</h4>
+                            <p>אם סומנה חלופה א', יש להעביר לקופות הגמל רק את דפים 1 ו-4 של הטופס, ולא את דפים 2 ו-3.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- חלופה ב' -->
+                <div class="alternative-section">
+                    <div class="alternative-title">
+                        <input type="checkbox" id="alternativeB" name="alternativeB" form="form161PartC">
+                        <label for="alternativeB" style="margin: 0; cursor: pointer;">חלופה ב'</label>
+                    </div>
+                    <div class="alternative-content">
+                        <p style="margin-bottom: 15px; font-weight: 600;">
+                            העובד העביר למעסיק את חלק ב' ובנוסף, התקיימו כל התנאים שלהלן:
+                        </p>
+                        <div class="condition-item">
+                            <strong>1.</strong> כל הסכומים בקופות הגמל (קוד משלם 4 ו-6) מנוהלים על ידי אותה חברה.
+                        </div>
+                        <div class="condition-item">
+                            <strong>2.</strong> העובד אינו בעל שליטה או קרוב של בעל שליטה.
+                        </div>
+                        <div class="condition-item">
+                            <strong>3.</strong> במקרה של מענק פיצויים עקב פטירה, הסכומים למוטבים פטורים ממס (לפי סעיף 9(א)(ב) לפקודה) ו/או קופות לקצבת שארים.
+                        </div>
+                        <div class="condition-item">
+                            <strong>4.</strong> העובד לא חויב במס על הפקדות מעסיק לרכיב פיצויים בקופת גמל לקצבה (לפי סעיפים 3(ה3)(1) ו-3(3)(1) לפקודה).
+                        </div>
+                        <div class="condition-item">
+                            <strong>5.</strong> בקשות העובד בחלק ב.1 נעשו על כל הסכומים הזמינים ובמסגרת התקרות המרביות שצוינו בחלק א.13.
+                        </div>
+                        <div class="condition-item">
+                            <strong>6.</strong> הצהרת העובד אינה כוללת בקשות נוספות מחלק ב.2 (כגון: פריסת מענק חייב במס או רצף פיצויים).
+                        </div>
+                        <div class="condition-item">
+                            <strong>7.</strong> העובד סימן בחלק ב.3 שכל ההצהרות התקיימו, או שלא סימן אותן אך לא ביקש סכום מענק פטור ממס.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- טבלת סיכום בקשות העובד - רק לחלופה ב' -->
+                <div id="summaryTableSection" style="margin-top: 25px;">
+                    <h3 style="font-size: 1.2em; color: #1e3c72; margin-bottom: 15px; font-weight: 600;">
+                        סיכום בקשות העובד בחלק ב.1
+                    </h3>
+                    <div class="table-container">
+                        <table id="employeeRequestsSummaryTable">
+                            <thead>
+                                <tr>
+                                    <th>סכום המענק הכולל </th>
+                                    <th>סכום לרצף קצבה </th>
+                                    <th>סכום לרצף פיצויים </th>
+                                    <th>סכום המענק החייב במס </th>
+                                    <th>סכום המענק הפטור לפי סעיף 9(א) </th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeRequestsSummaryBody">
+                                <tr>
+                                    <td>
+                                        <input type="number" name="taxableGrant" min="0" form="form161PartC" step="0.01" style="width: 100%; border: 1px solid #666; padding: 8px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="exemptGrant" min="0" form="form161PartC" step="0.01" style="width: 100%; border: 1px solid #666; padding: 8px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="severanceSequence" min="0" form="form161PartC" step="0.01" style="width: 100%; border: 1px solid #666; padding: 8px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="pensionSequence" min="0" form="form161PartC" step="0.01" style="width: 100%; border: 1px solid #666; padding: 8px;">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="totalGrant" min="0" form="form161PartC" step="0.01" style="width: 100%; border: 1px solid #666; padding: 8px;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- הנחיות לקופות וניכוי המס -->
+            <div class="form-section">
+                <h2 class="section-title">הנחיות לקופות וניכוי המס</h2>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; line-height: 1.8;">
+                    <p style="margin-bottom: 15px;">
+                        בהתאם לבקשות העובד בחלק ב.1 ולאשרור המעסיק, יש לנהוג בסכומים לרצף קצבה ו/או לרצף פיצויים, 
+                        ולנכות מס במקור מהמענק החייב במס, בהתאם לתקנות ניכוי מס במקור (ניכוי ממשכורת ומשכר עבודה) התשנ"ג- 1993.
+                    </p>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="taxDeductionRate" style="display: inline-block; margin-left: 10px;">בשיעור %</label>
+                        <input type="number" id="taxDeductionRate" name="taxDeductionRate" 
+                               min="0" max="100" step="0.01" form="form161PartC" 
+                               style="width: 150px; display: inline-block; margin-right: 10px;">
+                    </div>
+                    <div class="guidelines-box" style="margin-top: 20px; border-right-color: #27ae60;">
+                        <h4>דגשים לעובד -</h4>
+                        <p>יש להעביר לקופות הגמל את דפים 1 ו-4 של הטופס.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ג.2 - הנחיות למעסיק ולקופות -->
+            <div class="form-section">
+                <h2 class="section-title">ג.2 - הנחיות למעסיק ולקופות</h2>
+                <p style="margin-bottom: 20px; font-style: italic;">
+                    הנחיות למעסיק ולקופות ינתנו ע"י פקיד השומה, בכל מקרה בו לא מתקיימת אף לא אחת מהחלופות המפורטות בחלק ג.1.
+                </p>
+                <p style="margin-bottom: 20px; font-weight: 600;">(יש לסמן V לפי העניין)</p>
+
+                <!-- אפשרות 1 -->
+                <div class="alternative-section">
+                    <div class="alternative-title">
+                        <input type="checkbox" id="option1" name="option1" form="form161PartC">
+                        <label for="option1" style="margin: 0; cursor: pointer;">
+                            העובד לא העביר למעסיק את חלק ב' ולא התקיימו התנאים
+                        </label>
+                    </div>
+                    <div class="alternative-content">
+                        <p style="margin-bottom: 10px;">כמפורט בחלופה א'.</p>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="alternativeAConditionNumber" style="font-weight: normal; font-size: 0.9em;">
+                                (ציין את המספר שאינו מתקיים)
+                            </label>
+                            <input type="number" id="alternativeAConditionNumber" name="alternativeAConditionNumber" 
+                                   min="1" max="2" form="form161PartC" 
+                                   style="width: 100px; border-bottom: 2px solid #333; border-top: none; border-left: none; border-right: none; background: transparent; text-align: center;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- אפשרות 2 -->
+                <div class="alternative-section">
+                    <div class="alternative-title">
+                        <input type="checkbox" id="option2" name="option2" form="form161PartC">
+                        <label for="option2" style="margin: 0; cursor: pointer;">
+                            העובד העביר למעסיק את חלק ב' אולם, לא התקיימו התנאים
+                        </label>
+                    </div>
+                    <div class="alternative-content">
+                        <p style="margin-bottom: 10px;">כמפורט בחלופה ב'.</p>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="alternativeBConditionNumber" style="font-weight: normal; font-size: 0.9em;">
+                                (ציין את המספר שאינו מתקיים)
+                            </label>
+                            <input type="number" id="alternativeBConditionNumber" name="alternativeBConditionNumber" 
+                                   min="1" max="7" form="form161PartC" 
+                                   style="width: 100px; border-bottom: 2px solid #333; border-top: none; border-left: none; border-right: none; background: transparent; text-align: center;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guidelines-box" style="margin-top: 25px; border-right-color: #e74c3c;">
+                    <h4>דגשים לעובד -</h4>
+                    <p style="line-height: 1.8;">
+                        אם חלק זה (ג.2) מולא על ידי המעסיק, יש להעביר את הטופס לרשות המסים לקבלת הנחיות. 
+                        אם לא יינתנו הנחיות, ינוכה המס מהמענק החייב במס בשיעור המרבי הקבוע בחוק.
+                    </p>
+                </div>
+            </div>
+
+            <!-- ג.3 - הצהרת המעסיק -->
+            <div class="form-section">
+                <h2 class="section-title">ג.3 - הצהרת המעסיק</h2>
+                <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; margin-bottom: 25px; line-height: 1.8;">
+                    <p style="font-size: 1.05em; margin-bottom: 30px;">
+                        אני מצהיר בזאת כי כל הפרטים שמסרתי בחלק א' בטופס זה, הם מלאים ונכונים וכן הפרטים בחלק ג' מולאו על ידי כנדרש, 
+                        וכי ידועים לי העונשים הקבועים בחוק בגין השמטת פרטים או מסירת פרטים שאינם נכונים.
+                    </p>
+                    
+                    <div class="form-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px;">
+                        <div class="form-group">
+                            <label for="employerSignatureDate" style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+                                תאריך
+                            </label>
+                            <input type="date" id="employerSignatureDate" name="employerSignatureDate" form="form161PartC">
+                        </div>
+                        <div class="form-group">
+                            <label for="employerFullName" style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+                                שם מלא
+                            </label>
+                            <input type="text" id="employerFullName" name="employerFullName" form="form161PartC">
+                        </div>
+                        <div class="form-group">
+                            <label for="employerPosition" style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+                                תפקיד
+                            </label>
+                            <input type="text" id="employerPosition" name="employerPosition" form="form161PartC">
+                        </div>
+                        <div class="form-group">
+                            <label for="employerSignature" style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+                                חתימה
+                            </label>
+                            <div style="position: relative; text-align: center;">
+                                <canvas id="employerSignatureCanvas" width="400" height="150" 
+                                        style="border: 2px solid #666; border-radius: 8px; cursor: crosshair; background: white; display: block; width: 100%; max-width: 400px; touch-action: none; margin: 0 auto; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></canvas>
+                                <button type="button" id="clearEmployerSignature" 
+                                        style="margin-top: 10px; padding: 8px 15px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em;">
+                                    נקה חתימה
+                                </button>
+                                <input type="hidden" id="employerSignature" name="employerSignature" form="form161PartC">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="employerStamp" style="text-align: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 10px;">
+                                חותמת
+                            </label>
+                            <input type="text" id="employerStamp" name="employerStamp" form="form161PartC" 
+                                   placeholder="העלאת תמונה או טקסט">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- כפתור שליחה -->
+            <div class="form-section">
+                <button type="submit" class="btn btn-primary">שלח טופס</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="form161_partC.js"></script>
+</body>
+</html>
+

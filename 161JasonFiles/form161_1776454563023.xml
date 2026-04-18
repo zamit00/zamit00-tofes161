@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EmploymentTerminationInterface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <InterfaceBody>
+    <AddressingEntity>
+      <EmployerDetails>
+        <EmployerDeductionFileNumber>935657619</EmployerDeductionFileNumber>
+        <ContactMobileNumber>0505557523</ContactMobileNumber>
+        <ContactEmail>sarabeni@gmail.com</ContactEmail>
+        <EmployeeList>
+          <EmployeeDetails>
+            <EmployeeIdNumber>024019507</EmployeeIdNumber>
+            <FirstName>חגי</FirstName>
+            <LastName>זך</LastName>
+            <EmployeeContactDetails>
+              <EmployeeMobileNumber>0545287184</EmployeeMobileNumber>
+              <EmployeeEmail>zamit00@gmail.com</EmployeeEmail>
+            </EmployeeContactDetails>
+            <HolderOfControllingInterest>2</HolderOfControllingInterest>
+            <RelativeHolderOfControllingInterest>2</RelativeHolderOfControllingInterest>
+            <RetirmentReason>1</RetirmentReason>
+            <EmploymentPeriod>
+              <EmploymentStartDate>20070725</EmploymentStartDate>
+              <EmploymentRetirementDate>20260228</EmploymentRetirementDate>
+            </EmploymentPeriod>
+            <FullLastSalaryBeforeRetirement>40000</FullLastSalaryBeforeRetirement>
+            <LastInsuredSalary>40000</LastInsuredSalary>
+            <SeveranceSalary>40000</SeveranceSalary>
+            <NonTaxExemptGrants>
+              <Grant>
+                <PayerName>מגדל מקפת קרנות פנסיה וקופות גמל בע&quot;מ</PayerName>
+                <NonTaxExemptPayerDeductionFileNumber>935947150</NonTaxExemptPayerDeductionFileNumber>
+                <PayerTypeCode>4</PayerTypeCode>
+                <PaymentType>20</PaymentType>
+                <FirstDepositDate>20070725</FirstDepositDate>
+                <LastDepositDate>20260228</LastDepositDate>
+                <AmountForRetirementDay>7538</AmountForRetirementDay>
+              </Grant>
+              <Grant>
+                <PayerName>מגדל מקפת קרנות פנסיה וקופות גמל בע&quot;מ</PayerName>
+                <NonTaxExemptPayerDeductionFileNumber>935947150</NonTaxExemptPayerDeductionFileNumber>
+                <PayerTypeCode>6</PayerTypeCode>
+                <PaymentType>20</PaymentType>
+                <FirstDepositDate>20070725</FirstDepositDate>
+                <LastDepositDate>20260228</LastDepositDate>
+                <AmountForRetirementDay>29759</AmountForRetirementDay>
+              </Grant>
+              <Grant>
+                <PayerName>מגדל חברה לביטוח בע&quot;מ</PayerName>
+                <NonTaxExemptPayerDeductionFileNumber>930000948</NonTaxExemptPayerDeductionFileNumber>
+                <PayerTypeCode>6</PayerTypeCode>
+                <PaymentType>20</PaymentType>
+                <FirstDepositDate>20070725</FirstDepositDate>
+                <LastDepositDate>20260228</LastDepositDate>
+                <AmountForRetirementDay>336533.58</AmountForRetirementDay>
+                <AdditionalAccumulation>2148</AdditionalAccumulation>
+              </Grant>
+              <Grant>
+                <PayerName>מגדל מקפת קרנות פנסיה וקופות גמל בע&quot;מ</PayerName>
+                <NonTaxExemptPayerDeductionFileNumber>935967851</NonTaxExemptPayerDeductionFileNumber>
+                <PayerTypeCode>6</PayerTypeCode>
+                <PaymentType>20</PaymentType>
+                <FirstDepositDate>20070725</FirstDepositDate>
+                <LastDepositDate>20260228</LastDepositDate>
+                <AmountForRetirementDay>738093.88</AmountForRetirementDay>
+                <AdditionalAccumulation>4516</AdditionalAccumulation>
+              </Grant>
+            </NonTaxExemptGrants>
+            <TaxExemptGrants>
+              <Grant>
+                <PayerName>מקפת</PayerName>
+                <TaxExemptPayerDeductionFileNumber>935967851</TaxExemptPayerDeductionFileNumber>
+                <NominalDeductiblePaymentAmount>14033.74</NominalDeductiblePaymentAmount>
+                <RealDeductiblePaymentAmount>14033.74</RealDeductiblePaymentAmount>
+              </Grant>
+              <Grant>
+                <PayerName>מגדל</PayerName>
+                <TaxExemptPayerDeductionFileNumber>930000948</TaxExemptPayerDeductionFileNumber>
+                <NominalDeductiblePaymentAmount>14936.99</NominalDeductiblePaymentAmount>
+                <RealDeductiblePaymentAmount>14936.99</RealDeductiblePaymentAmount>
+              </Grant>
+            </TaxExemptGrants>
+          </EmployeeDetails>
+        </EmployeeList>
+      </EmployerDetails>
+    </AddressingEntity>
+  </InterfaceBody>
+</EmploymentTerminationInterface>

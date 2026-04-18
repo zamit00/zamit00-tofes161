@@ -1,0 +1,26 @@
+{
+  "name": "161",
+  "version": "1.0.0",
+  "description": "",
+  "main": "form161-guide.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mark-original": "node scripts/mark-tofes161-original-check.mjs",
+    "mark-original:info": "node scripts/mark-tofes161-original-check.mjs --info"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zamit00/zamit00-tofes161.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/zamit00/zamit00-tofes161/issues"
+  },
+  "homepage": "https://github.com/zamit00/zamit00-tofes161#readme",
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}

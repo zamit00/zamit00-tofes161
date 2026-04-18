@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "formType": "161-part-a",
+  "savedAt": "2026-04-17T16:38:59.967Z",
+  "employeeIdNumber": "024019507",
+  "fields": {
+    "employeeIdNumber": {
+      "type": "input",
+      "value": "024019507"
+    },
+    "firstName": {
+      "type": "input",
+      "value": "חגי"
+    },
+    "lastName": {
+      "type": "input",
+      "value": "זך"
+    },
+    "employeeBirthDate": {
+      "type": "input",
+      "value": "1969-05-01"
+    },
+    "employeeStreet": {
+      "type": "input",
+      "value": "דרך היין 5 דירה"
+    },
+    "employeeHouseNumber": {
+      "type": "input",
+      "value": "11"
+    },
+    "employeeCity": {
+      "type": "input",
+      "value": "אשקלון"
+    },
+    "employeeZipCode": {
+      "type": "input",
+      "value": "7847602"
+    },
+    "employeePhonePrefix": {
+      "type": "select",
+      "value": "054"
+    },
+    "employeePhoneNumber": {
+      "type": "input",
+      "value": "5287184"
+    },
+    "employeeEmail": {
+      "type": "input",
+      "value": "zamit00@gmail.com"
+    },
+    "holderOfControllingInterest": {
+      "type": "checkbox",
+      "checked": false,
+      "value": "on"
+    },
+    "relativeHolderOfControllingInterest": {
+      "type": "checkbox",
+      "checked": false,
+      "value": "on"
+    },
+    "relationshipType": {
+      "type": "select",
+      "value": ""
+    },
+    "employerDeductionFile": {
+      "type": "input",
+      "value": "935657619"
+    },
+    "employerName": {
+      "type": "input",
+      "value": "מקפת מגדל ניהול"
+    },
+    "employerStreet": {
+      "type": "input",
+      "value": "היצירה"
+    },
+    "employerHouseNumber": {
+      "type": "input",
+      "value": "2"
+    },
+    "employerCity": {
+      "type": "input",
+      "value": "פתח תקווה"
+    },
+    "employerZipCode": {
+      "type": "input",
+      "value": "4951228"
+    },
+    "contactEmail": {
+      "type": "input",
+      "value": "sarabeni@gmail.com"
+    },
+    "contactPhonePrefix": {
+      "type": "select",
+      "value": "050"
+    },
+    "contactPhoneNumber": {
+      "type": "input",
+      "value": "5557523"
+    },
+    "retirementReason": {
+      "type": "radio-group",
+      "value": "1"
+    },
+    "employmentStartDate": {
+      "type": "input",
+      "value": "2007-07-25"
+    },
+    "employmentRetirementDate": {
+      "type": "input",
+      "value": "2026-02-28"
+    },
+    "employmentPeriodDays": {
+      "type": "input",
+      "value": "6794"
+    },
+    "employmentPeriodYears": {
+      "type": "input",
+      "value": "18"
+    },
+    "employmentPeriodPartialYears": {
+      "type": "input",
+      "value": "0.614"
+    },
+    "fullLastSalaryBeforeRetirement": {
+      "type": "input",
+      "value": "40,000.00"
+    },
+    "uniformSalaryCheckbox": {
+      "type": "checkbox",
+      "checked": true,
+      "value": "on"
+    },
+    "lastInsuredSalary": {
+      "type": "input",
+      "value": "40,000.00"
+    },
+    "severanceSalary": {
+      "type": "input",
+      "value": "40,000.00"
+    },
+    "budgetaryPensionOption": {
+      "type": "radio-group",
+      "value": "none"
+    },
+    "entitlementDate": {
+      "type": "input",
+      "value": ""
+    },
+    "salaryForBudgetaryPensionCalculation": {
+      "type": "input",
+      "value": ""
+    },
+    "payerName_0": {
+      "type": "input",
+      "value": "מגדל מקפת קרנות פנסיה וקופות גמל בע\"מ"
+    },
+    "payerDeductionFile_0": {
+      "type": "input",
+      "value": "935947150"
+    },
+    "payerTypeCode_0": {
+      "type": "select",
+      "value": "4"
+    },
+    "paymentType_0": {
+      "type": "select",
+      "value": "20"
+    },
+    "firstDepositDate_0": {
+      "type": "input",
+      "value": "2007-07-25"
+    },
+    "lastDepositDate_0": {
+      "type": "input",
+      "value": "2026-02-28"
+    },
+    "amountForRetirementDay_0": {
+      "type": "input",
+      "value": "7,538.00"
+    },
+    "additionalAccumulation_0": {
+      "type": "input",
+      "value": "0.00"
+    },
+    "payerName_1": {
+      "type": "input",
+      "value": "מגדל מקפת קרנות פנסיה וקופות גמל בע\"מ"
+    },
+    "payerDeductionFile_1": {
+      "type": "input",
+      "value": "935947150"
+    },
+    "payerTypeCode_1": {
+      "type": "select",
+      "value": "6"
+    },
+    "paymentType_1": {
+      "type": "select",
+      "value": "20"
+    },
+    "firstDepositDate_1": {
+      "type": "input",
+      "value": "2007-07-25"
+    },
+    "lastDepositDate_1": {
+      "type": "input",
+      "value": "2026-02-28"
+    },
+    "amountForRetirementDay_1": {
+      "type": "input",
+      "value": "29,759.00"
+    },
+    "additionalAccumulation_1": {
+      "type": "input",
+      "value": "0.00"
+    },
+    "payerName_2": {
+      "type": "input",
+      "value": "מגדל חברה לביטוח בע\"מ"
+    },
+    "payerDeductionFile_2": {
+      "type": "input",
+      "value": "930000948"
+    },
+    "payerTypeCode_2": {
+      "type": "select",
+      "value": "6"
+    },
+    "paymentType_2": {
+      "type": "select",
+      "value": "20"
+    },
+    "firstDepositDate_2": {
+      "type": "input",
+      "value": "2007-07-25"
+    },
+    "lastDepositDate_2": {
+      "type": "input",
+      "value": "2026-02-28"
+    },
+    "amountForRetirementDay_2": {
+      "type": "input",
+      "value": "336,533.58"
+    },
+    "additionalAccumulation_2": {
+      "type": "input",
+      "value": "2,148.00"
+    },
+    "payerName_3": {
+      "type": "input",
+      "value": "מגדל מקפת קרנות פנסיה וקופות גמל בע\"מ"
+    },
+    "payerDeductionFile_3": {
+      "type": "input",
+      "value": "935967851"
+    },
+    "payerTypeCode_3": {
+      "type": "select",
+      "value": "6"
+    },
+    "paymentType_3": {
+      "type": "select",
+      "value": "20"
+    },
+    "firstDepositDate_3": {
+      "type": "input",
+      "value": "2007-07-25"
+    },
+    "lastDepositDate_3": {
+      "type": "input",
+      "value": "2026-02-28"
+    },
+    "amountForRetirementDay_3": {
+      "type": "input",
+      "value": "738,093.88"
+    },
+    "additionalAccumulation_3": {
+      "type": "input",
+      "value": "4,516.00"
+    },
+    "partA9TotalDisplay": {
+      "type": "input",
+      "value": "1,118,588.46"
+    },
+    "taxExemptOption": {
+      "type": "radio-group",
+      "value": "yes"
+    },
+    "taxExemptPayerName_0": {
+      "type": "input",
+      "value": "מקפת"
+    },
+    "taxExemptPayerDeductionFile_0": {
+      "type": "input",
+      "value": "935967851"
+    },
+    "nominalDeductiblePaymentAmount_0": {
+      "type": "input",
+      "value": "14,033.74"
+    },
+    "realDeductiblePaymentAmount_0": {
+      "type": "input",
+      "value": "14,033.74"
+    },
+    "taxExemptPayerName_1": {
+      "type": "input",
+      "value": "מגדל"
+    },
+    "taxExemptPayerDeductionFile_1": {
+      "type": "input",
+      "value": "930000948"
+    },
+    "nominalDeductiblePaymentAmount_1": {
+      "type": "input",
+      "value": "14,936.99"
+    },
+    "realDeductiblePaymentAmount_1": {
+      "type": "input",
+      "value": "14,936.99"
+    },
+    "partA10NominalTotalDisplay": {
+      "type": "input",
+      "value": "28,970.73"
+    },
+    "partA10RealTotalDisplay": {
+      "type": "input",
+      "value": "28,970.73"
+    },
+    "partA11TotalDisplay": {
+      "type": "input",
+      "value": "0.00"
+    },
+    "partA9ToA11TotalDisplay": {
+      "type": "input",
+      "value": "1,147,559.19"
+    },
+    "ceilingOption1": {
+      "type": "radio-group",
+      "value": "yes"
+    },
+    "grantsIncludeNonPension": {
+      "type": "radio-group",
+      "value": "yes"
+    },
+    "maxTotalGrantAmount": {
+      "type": "input",
+      "value": "1,147,559.19"
+    },
+    "maxPensionContinuityAmount": {
+      "type": "input",
+      "value": "1,140,021.19"
+    },
+    "maxSeveranceContinuityAmount": {
+      "type": "input",
+      "value": "1,147,559.19"
+    },
+    "maxExemptGrantAmount": {
+      "type": "input",
+      "value": "255,825.00"
+    },
+    "maxTaxableGrantAmount": {
+      "type": "input",
+      "value": "1,118,588.46"
+    }
+  }
+}

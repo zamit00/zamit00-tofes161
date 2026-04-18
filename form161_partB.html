@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טופס 161 - חלק ב' - הודעת העובד</title>
+    <link rel="stylesheet" href="vendor/sweetalert2/dist/sweetalert2.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-content {
+            text-align: center;
+            flex: 1;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.5em;
+            font-weight: 700;
+            opacity: 1;
+            margin-top: 15px;
+        }
+
+        .page-number-header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 0.9em;
+            color: white;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .form-section {
+            padding: 30px;
+            border-bottom: 1px solid #888;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2a5298;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            padding: 12px;
+            border: 2px solid #888;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        /* הגדלת ה-calendar popup בלבד - באמצעות CSS על ה-shadow DOM */
+        input[type="date"] {
+            font-size: 1.2em;
+        }
+        
+        /* הגדלת ה-calendar picker indicator */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        input.error {
+            border-color: #e74c3c;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-right: 4px solid #2a5298;
+        }
+
+        .info-section h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .info-section ol,
+        .info-section ul {
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .info-section li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .info-section .sub-points {
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+
+        .info-section .sub-points li {
+            margin-bottom: 5px;
+        }
+
+        .qr-code-placeholder {
+            width: 150px;
+            height: 150px;
+            background: #ffffff;
+            border: 2px solid #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            border-radius: 8px;
+            min-height: 150px;
+        }
+
+        .qr-code-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 4px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            padding-right: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #888;
+        }
+
+        th {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        tbody tr.summary-row {
+            background: #f0f0f0;
+            font-weight: 600;
+        }
+
+        tbody tr.total-row {
+            background: #e8f4f8;
+            font-weight: 700;
+        }
+
+        .not-applicable {
+            text-align: center;
+            color: #999;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: #f5f5f5;
+        }
+
+        .not-applicable-disabled {
+            text-align: center;
+            color: #666;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: #d0d0d0;
+            cursor: not-allowed;
+        }
+
+        .shaded-input-cell {
+            background: #e0e0e0;
+        }
+
+        .total-input-cell {
+            background: #e0e0e0;
+        }
+
+        tbody tr.summary-row {
+            background: #f0f0f0;
+        }
+
+        tbody tr.total-row {
+            background: #f0f0f0;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-add {
+            background: #27ae60;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .btn-add:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 82, 152, 0.3);
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .employee-id-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .signature-section {
+            background: #f8f9fa;
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 8px;
+            border: 2px dashed #888;
+        }
+
+        .signature-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #888;
+        }
+
+        .employee-id-section label {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        .employee-id-section input {
+            max-width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="position: relative;">
+        <div class="page-number-header">דף 3 מתוך 4</div>
+        <div class="header">
+            <img alt="" src="michpal-removebg-preview.png" width="120px">
+            <div class="header-content">
+                <h1>טופס 161 - הודעה על פרישה מעבודה</h1>
+                <p style="font-size: 1.5em; font-weight: 700; margin-top: 15px; opacity: 1;">חלק ב' - הודעת העובד</p>
+            </div>
+        </div>
+
+        <!-- מספר זהות מתחת ל-header -->
+        <div class="form-section" style="padding: 20px 30px; border-bottom: 1px solid #888;">
+            <div class="employee-id-section" style="display: flex; align-items: center; gap: 10px; justify-content: flex-start; direction: ltr;">
+                <input type="text" id="employeeIdPartB" name="employeeIdPartB" 
+                       pattern="\d{9}" maxlength="9" inputmode="numeric"
+                       style="width: 150px; border: 2px solid #888; padding: 8px; border-radius: 8px;">
+                <span class="error-message" style="display: none; color: #e74c3c; font-size: 0.85em;">מספר זהות חייב להיות 9 ספרות בלבד</span>
+                <label for="employeeIdPartB" style="font-weight: 600; margin: 0;">מספר זהות:</label>
+           
+            </div>
+        </div>
+
+        <form id="form161PartB" novalidate>
+
+            <!-- הסבר -->
+            <div class="form-section">
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    <p style="margin: 0; line-height: 1.8; flex: 1; min-width: 300px;">
+                        חלק זה ימולא ע"י העובד וזאת לאחר שהוצגו בפניו כל הפרטים שמולאו על ידי המעסיק בחלק א', ושנמסרו לעובד בתאריך:
+                    </p>
+                    <div style="min-width: 200px;">
+                        <input type="date" id="partADeliveryDate" name="partADeliveryDate" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- מדריך למילוי -->
+            <div class="form-section">
+                <div class="info-section">
+                    <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px; align-items: start;">
+                        <div>
+                            <h3>מדריך למילוי חלק זה:</h3>
+                            <div class="qr-code-placeholder" style="display: flex; align-items: center; justify-content: center;">
+                                <img src="qrcode.png" alt="QR Code - מדריך למילוי" style="width: 150px; height: 150px; border-radius: 4px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color: #999; font-size: 0.9em;\'>QR Code</span>'">
+                            </div>
+                        </div>
+                        <div>
+                            <h3>לתשומת לב העובד:</h3>
+                            <ol>
+                                <li>
+                                    <strong>אפשרות לא למלא חלק זה:</strong> העובד רשאי שלא למלא חלק זה. במקרה כזה, ייחשב הדבר כבקשה לרצף קצבה ברירת מחדל, ובלבד שמתקיימים כל התנאים הבאים:
+                                    <ol class="sub-points" type="א">
+                                        <li>המעסיק סימן בחלק א.12 "אינו עולה" - כלומר, סך הסכומים העומדים לרשות העובד שהופקדו ע"י המעסיק במרכיב הפיצויים בכל קופות הגמל לקצבה, אינו עולה על התקרה הנקובה בסעיף 9(א)(1) לפקודה.</li>
+                                        <li>המעסיק סימן בחלק א.12 "לא" - כלומר, המענקים המדווחים בחלק א.9 אינם כוללים מענקים ממשלמים שאינם קופות גמל לקצבה, כדוגמת מעסיק וקופה מרכזית לפיצויים.</li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <strong>חובה למלא חלק זה:</strong> בכל מקרה אחר, העובד חייב למלא חלק זה, לפרט את בקשותיו ביחס לכל התשלומים, ולהחזיר את הטופס למעסיק.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ב.1 - בקשות העובד -->
+            <div class="form-section">
+                <h2 class="section-title">ב.1 - להלן בקשות העובד ביחס למענקים שהועמדו לרשותו בגין תקופת העבודה ושדווחו בחלק א.9</h2>
+                
+                <!-- טבלה -->
+                <div class="table-container">
+                    <table id="employeeRequestsTable">
+                        <thead>
+                            <tr>
+                                <th>מס' שורה בחלק א.9</th>
+                                <th>שם המשלם</th>
+                                <th>הסכום הכולל</th>
+                                <th>סכום לרצף קצבה (א)</th>
+                                <th>סכום לרצף פיצויים (ב)</th>
+                                <th>סכום המענק הפטור לפי סעיף 9(א)(2) (ג)</th>
+                                <th>סכום המענק החייב במס (ד)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeRequestsBody">
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" name="payerName_1" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalAmount_1" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="pensionContinuity_1" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="severanceContinuity_1" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="exemptAmount_1" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="taxableAmount_1" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>
+                                    <input type="text" name="payerName_2" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalAmount_2" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="pensionContinuity_2" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="severanceContinuity_2" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="exemptAmount_2" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="taxableAmount_2" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>
+                                    <input type="text" name="payerName_3" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalAmount_3" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="pensionContinuity_3" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="severanceContinuity_3" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="exemptAmount_3" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="taxableAmount_3" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>
+                                    <input type="text" name="payerName_4" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalAmount_4" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="pensionContinuity_4" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="severanceContinuity_4" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="exemptAmount_4" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="taxableAmount_4" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>
+                                    <input type="text" name="payerName_5" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalAmount_5" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="pensionContinuity_5" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="severanceContinuity_5" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="exemptAmount_5" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" name="taxableAmount_5" min="0" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="summary-row">
+                                <td colspan="2" style="text-align: right; line-height: 1.5;">
+                                    סה"כ התשלומים שחויבו במס, לרבות<br>
+                                    רווחים ליום הפרישה, כמפורט בחלק א.10
+                                </td>
+                                <td>
+                                    <input type="text" name="summaryPayerName_1" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalTaxablePayments" name="totalTaxablePayments" 
+                                           min="0" form="form161PartB" style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalTaxablePension" name="totalTaxablePension" 
+                                           min="0" form="form161PartB" disabled
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px; background: #d0d0d0; cursor: not-allowed;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalTaxableSeverance" 
+                                           min="0" form="form161PartB" disabled
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px; background: #d0d0d0; cursor: not-allowed;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalTaxableExempt" 
+                                           min="0" form="form161PartB" disabled
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px; background: #d0d0d0; cursor: not-allowed;">
+                                </td>
+                            </tr>
+                            <tr class="summary-row">
+                                <td colspan="2" style="text-align: right; line-height: 1.5;">
+                                    הסכום הכולל שעל בסיסו חושבה הקצבה<br>
+                                    כמפורט בחלק א.11
+                                </td>
+                                <td>
+                                    <input type="text" name="summaryPayerName_2" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalPensionCalculation" name="totalPensionCalculation" 
+                                           min="0" form="form161PartB" style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalPensionCalculationContinuity" name="totalPensionCalculationContinuity" 
+                                           min="0" form="form161PartB" disabled
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px; background: #d0d0d0; cursor: not-allowed;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalPensionSeverance" 
+                                           min="0" form="form161PartB" disabled
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px; background: #d0d0d0; cursor: not-allowed;">
+                                </td>
+                                <td>
+                                    <input type="number" name="totalPensionExempt" 
+                                           min="0" form="form161PartB" disabled
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px; background: #d0d0d0; cursor: not-allowed;">
+                                </td>
+                             </tr>
+                            <tr class="total-row">
+                                <td colspan="2" style="text-align: right; line-height: 1.5;">
+                                    <span style="font-size: 0.9em;">(שלא יעלה על הסכום המרבי</span><br>
+                                    <strong style="font-size: 1.1em; display: block; text-align: center; margin: 5px 0;">סה"כ</strong><br>
+                                    <span style="font-size: 0.9em;">כמפורט בסעיף א.13)</span>
+                                </td>
+                                <td>
+                                    <input type="text" name="totalPayerName" form="form161PartB" 
+                                           style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalGrantAmount" name="totalGrantAmount" 
+                                           min="0" form="form161PartB" style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalPensionContinuity" name="totalPensionContinuity" 
+                                           min="0" form="form161PartB" style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalSeveranceContinuity" name="totalSeveranceContinuity" 
+                                           min="0" form="form161PartB" style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                                <td>
+                                    <input type="number" id="totalExemptAmount" name="totalExemptAmount" 
+                                           min="0" form="form161PartB" style="width: 100%; border: 1px solid #666; padding: 8px; border-radius: 4px;">
+                                </td>
+                             </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- הסברים מפורטים -->
+                <div class="info-section" style="margin-top: 30px;">
+                    <h3 style="color: #1e3c72; margin-bottom: 15px; font-size: 1.1em;">הסברים:</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #2a5298; margin-bottom: 10px; font-size: 1em;">(א) סכום לרצף קצבה:</h4>
+                        <p style="margin-bottom: 10px; line-height: 1.8;">
+                            <strong>משמעות:</strong> בחירה זו משמעותה השארת כספי פיצויים בקופת גמל לקצבה, כך שתשולם מהסכומים הללו קצבה. הסכומים המדווחים בחלקים א.10 וא.11 נחשבים כמיועדים לרצף קצבה. ניתן לבחור לייעד סכומים מחלק א.9 (הפקדות שוטפות וצבירה נוספת, קוד משלם 5 או 6) לרצף קצבה, כפי שמפורט בהערת שוליים 26.
+                        </p>
+                        <p style="margin-bottom: 10px; font-weight: 600;">לידיעתך:</p>
+                        <ol style="margin-right: 20px; line-height: 1.8;">
+                            <li>בקשה לרצף קצבה ניתנת לביטול בכל עת.</li>
+                            <li>אם לא נוצל הפטור המלא ממס (לפי סעיף 9(7א) לפקודה) במועד הפרישה, הזכות לניצול הפטור נשמרת בעת ביטול בקשה לרצף קצבה.</li>
+                            <li>ביטול מרצף קצבה מתבצע באמצעות טופס 161ג. פעולה זו גורמת ל"ביטול רצף" לכל הסכומים בקופות שלגביהם בוצעה בקשה לרצף קצבה (למעט קופת פנסיה וותיקה - קוד משלם 5), ובלבד שסכומים אלה נצברו במהלך תקופת עבודה אצל אותו מעסיק. נקבע במפורש כי לא ניתן לבטל רק חלק מהסכום המיועד.</li>
+                            <li>למרות האמור לעיל, התשלומים הכוללים שחויבו במס כפי שמפורט בחלק א.10 (הפקדות למרכיב הפיצויים בקופת גמל לקצבה, שחויבו במס במועד ההפקדה ודווחו על ידי המעסיק כ"תשלומים פטורים"), ניתן למשוך אותם על ידי פנייה לקופת הגמל ממועד הפרישה. קופת הגמל לא תגבה מס בעת משיכת הפקדות אלה. עם זאת, רווחים שנצברו מהפקדות אלה חייבים במס, וקופת הגמל תגבה מס בשיעור של 15% (לשנת 2023) לפי סעיף 125ג(ג) לפקודה. לחלופין, במועד הזכאות לקצבה, ניתן לקבל קצבה שמקורה ב"תשלומים פטורים" אלה. הקצבה שמקורה בתשלומים פטורים אלה וברווחים שנצברו מהם תיחשב כקצבה פטורה ממס.</li>
+                        </ol>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #2a5298; margin-bottom: 10px; font-size: 1em;">(ב) סכום לרצף פיצויים:</h4>
+                        <p style="margin-bottom: 10px; line-height: 1.8;">
+                            <strong>משמעות:</strong> בחירה זו משמעותה דחיית אירוע המס לפיצויים מהמעסיק הנוכחי עד למועד הפרישה מהמעסיק הבא. ניתן לייעד סכומים לרצף פיצויים עד ל"תקרת רצף פיצויים", כפי שמפורט בהערת שוליים 27.
+                        </p>
+                        <p style="margin-bottom: 10px; font-weight: 600;">לידיעתך:</p>
+                        <ol style="margin-right: 20px; line-height: 1.8;">
+                            <li>במועד הפרישה מהמעסיק הנוכחי, בחירה ברצף פיצויים אינה מאפשרת משיכת תשלום פיצויים פטור ממס לפי סעיף 9(7א) לפקודה.</li>
+                            <li>בנוסף, על העובד למצוא מעסיק חדש תוך שנה ממועד הפרישה, שיפקיד עבורו כספים למרכיב הפיצויים בקופת גמל לקצבה.</li>
+                            <li>אם לא נמצא מעסיק חדש במועד הנקוב, על העובד לדווח על כך לרשות המסים, כדי שיינתנו הוראות לקופת הגמל. יש לעשות זאת תוך 13 חודשים ממועד הפרישה מהמעסיק הנוכחי.</li>
+                            <li>ביטול מרצף פיצויים, ובלבד שהתקיימו התנאים לרצף פיצויים, מתבצע באמצעות טופס 161ג. העובד רשאי לבטל את בקשתו לרצף פיצויים תוך שנתיים ממועד הפרישה. ביטול מרצף פיצויים לאחר שנתיים ממועד הפרישה, או אם אינו חלק מפרישה ממעסיק חדש, יבטל את הזכאות לתשלום פטור ממס. בקשה לביטול מרצף פיצויים גורמת ל"ביטול רצף" לכל הסכומים שלגביהם בוצעה בקשה לרצף, לרבות סכומים שמיועדים לרצף פיצויים ממעסיקים קודמים.</li>
+                        </ol>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #2a5298; margin-bottom: 10px; font-size: 1em;">(ג) סכום המענק הפטור לפי סעיף 9(7א):</h4>
+                        <p style="line-height: 1.8;">
+                            תקרת סכום המענק הפטור מפורטת בהערת שוליים 28. משיכת תשלומי פיצויים ממרכיב הפיצויים בקופת הגמל לקצבה תקטין את חסכונות הפנסיה של העובד ואת הקצבה הצפויה במועד הגיעו ל"גיל הזכאות". בנוסף, משיכת תשלומי פיצויים פטורים ממס עלולה להשפיע לרעה על הפטור החודשי ממס על הקצבה המשולמת על ידי המעסיק או קופת הגמל.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #2a5298; margin-bottom: 10px; font-size: 1em;">(ד) סכום המענק החייב:</h4>
+                        <p style="line-height: 1.8;">
+                            זהו סכום הפיצויים העולה על הסכום הפטור או הסכום שהעובד מעוניין למשוך ללא ניצול הפטור ממס.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #2a5298; margin-bottom: 10px; font-size: 1em;">(ה) גיל הזכאות:</h4>
+                        <p style="line-height: 1.8;">
+                            זהו גיל הפרישה של העובד (לשנת 2024, זהו 62-64/67, בהתאם לתוספות מיוחדות לכל גיל פרישה) או מועד קבלת הקצבה הזכאית הראשונה, לפי המאוחר מביניהם.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ב.2 - בקשות נוספות -->
+            <div class="form-section">
+                <h2 class="section-title">ב.2 - בקשות נוספות (יש לסמן V לפי העניין)</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <div class="checkbox-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px;">
+                        <input type="checkbox" id="spreadTaxableGrant" name="spreadTaxableGrant" form="form161PartB">
+                        <label for="spreadTaxableGrant" style="margin: 0; font-weight: normal; line-height: 1.6;">
+                            בכוונתי לבקש לפרוס את סכום המענק החייב בהתאם להוראות סעיף 8(ג)(3) לפקודה (בקשה כאמור תוגש לפקיד השומה באמצעות טופס 116ג).
+                        </label>
+                    </div>
+                    
+                    <div class="checkbox-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px;">
+                        <input type="checkbox" id="designateSeveranceAmount" name="designateSeveranceAmount" form="form161PartB">
+                        <label for="designateSeveranceAmount" style="margin: 0; font-weight: normal; line-height: 1.6;">
+                            אני מבקש לייעד סכום לרצף פיצויים שמקורו מהמעסיק או מקופה מרכזית לפיצויים בסך
+                        </label>
+                    </div>
+                    
+                    <div id="severanceAmountDetails" style="display: none; margin-right: 30px; margin-top: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                            <span>₪</span>
+                            <input type="number" id="severanceContinuityAmount" name="severanceContinuityAmount" 
+                                   min="0" form="form161PartB" style="max-width: 200px;">
+                        </div>
+                        <p style="margin-bottom: 10px; line-height: 1.6;">
+                            בכפוף לאישור פקיד השומה, הסכום כאמור יופקד על ידי המעסיק לקופת גמל לקצבה
+                        </p>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label for="pensionFundDeductionFile" style="margin: 0; white-space: nowrap;">מספר תיק ניכויים:</label>
+                            <div style="position: relative; display: inline-block;">
+                                <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-weight: 600; z-index: 1;">9</span>
+                                <input type="text" id="pensionFundDeductionFile" name="pensionFundDeductionFile" 
+                                       pattern="9\d{8}" maxlength="9" form="form161PartB"
+                                       style="padding-left: 30px; width: 180px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ב.3 - הצהרת העובד -->
+            <div class="form-section">
+                <h2 class="section-title">ב.3 - הצהרת העובד (יש לסמן V לפי העניין)</h2>
+                
+                <div style="margin-bottom: 25px;">
+                    <p style="margin-bottom: 15px; font-weight: 600;">1. אני מצהיר כי:</p>
+                    
+                    <div class="checkbox-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+                        <input type="checkbox" id="noOtherTaxExemptGrants" name="noOtherTaxExemptGrants" form="form161PartB">
+                        <label for="noOtherTaxExemptGrants" style="margin: 0; font-weight: normal; line-height: 1.6;">
+                            בגין תקופת עבודתי אצל המעסיק לא קיבלתי ממעסיקים אחרים מענקי פרישה פטורים ממס בהתאם לסעיף 9(7א) לפקודה.
+                        </label>
+                    </div>
+                    
+                    <div class="checkbox-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+                        <input type="checkbox" id="noOtherSeveranceRequest" name="noOtherSeveranceRequest" form="form161PartB">
+                        <label for="noOtherSeveranceRequest" style="margin: 0; font-weight: normal; line-height: 1.6;">
+                            לא הגשתי בקשה לרצף פיצויים בגין אירועי פרישה ממעסיקים אחרים.
+                        </label>
+                    </div>
+                    
+                    <div class="checkbox-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+                        <input type="checkbox" id="eligibilityAgeDeclaration" name="eligibilityAgeDeclaration" form="form161PartB">
+                        <label for="eligibilityAgeDeclaration" style="margin: 0; font-weight: normal; line-height: 1.6;">
+                            טרם הגעתי לגיל הזכאות(ה) או הגעתי לגיל הזכאות אך טרם הגשתי לפקיד השומה בקשה לקיבוע זכויות לפי סעיף 9א לפקודה (באמצעות טופס 161ד).
+                        </label>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <p style="margin-bottom: 15px; font-weight: 600;">2. אני מצהיר בזאת כי כל הפרטים שמסרתי בטופס זה הם מלאים ונכונים.</p>
+                </div>
+            </div>
+
+            <!-- חתימת העובד -->
+            <div class="form-section signature-section" style="background: #f8f9fa; padding: 30px; margin-top: 30px; border-radius: 8px; border: 2px dashed #ddd;">
+                <h2 class="section-title">חתימת העובד</h2>
+                <div class="signature-box" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #888;">
+                    <div style="display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <div class="form-group">
+                                <label for="employeeNamePartB">שם העובד</label>
+                                <input type="text" id="employeeNamePartB" name="employeeNamePartB" 
+                                       form="form161PartB">
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <div class="form-group">
+                                <label for="employeeSignatureDate">תאריך</label>
+                                <input type="date" id="employeeSignatureDate" name="employeeSignatureDate" 
+                                       form="form161PartB">
+                            </div>
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <div class="form-group">
+                                <label for="employeeSignature">חתימה</label>
+                                <div style="position: relative;">
+                                    <canvas id="signatureCanvas" width="400" height="150" 
+                                            style="border: 2px solid #666; border-radius: 8px; cursor: crosshair; background: white; display: block; width: 100%; max-width: 400px; touch-action: none; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"></canvas>
+                                    <button type="button" id="clearSignature" 
+                                            style="margin-top: 10px; padding: 8px 15px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9em; transition: background 0.3s;">
+                                        נקה חתימה
+                                    </button>
+                                    <input type="hidden" id="employeeSignature" name="employeeSignature" form="form161PartB">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- כפתור שליחה -->
+            <div class="form-section">
+                <button type="submit" class="btn btn-primary">שלח טופס</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="form161_partB.js"></script>
+</body>
+</html>
+

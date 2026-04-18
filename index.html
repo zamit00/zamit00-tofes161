@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טופס 161 - הודעה על פרישה מעבודה - חלק א'</title>
+    <link rel="stylesheet" href="vendor/sweetalert2/dist/sweetalert2.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: visible;
+        }
+
+        .sticky-top-shell {
+            position: sticky;
+            top: 0;
+            z-index: 1200;
+            background: white;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-content {
+            text-align: center;
+            flex: 1;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 1.5em;
+            font-weight: 700;
+            opacity: 1;
+            margin-top: 15px;
+        }
+
+        .header-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+        .page-number {
+            position: absolute;
+            top: 5px;
+            left: 20px;
+            font-size: 0.9em;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .page-number-header {
+            position: absolute;
+            top: 5px;
+            left: 20px;
+            font-size: 0.9em;
+            color: white;
+            font-weight: 600;
+            z-index: 10;
+        }
+
+        .page-break {
+            margin: 60px 0;
+            padding: 0;
+            text-align: center;
+            position: relative;
+            page-break-after: always;
+        }
+
+        .page-break-separator {
+            display: block;
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px 20px 0 0;
+            margin-bottom: 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-break-spacer {
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .form-section.page-start {
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin-top: 0;
+            border-top: none;
+        }
+
+        .form-type-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-type-group label {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .form-type-checkboxes {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .form-type-checkboxes .checkbox-group {
+            margin: 0;
+        }
+
+        .form-type-checkboxes .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .form-type-checkboxes input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .previous-form-date {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .previous-form-date label {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .previous-form-date input[type="date"] {
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 0.95em;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+        }
+
+        .previous-form-date input[type="date"]:focus {
+            outline: none;
+            border-color: white;
+            background: white;
+        }
+
+        .form-section {
+            padding: 30px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2a5298;
+            font-weight: 600;
+        }
+
+        .section-title .section-toggle-arrow {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 0.9em;
+            transition: transform 0.2s ease;
+        }
+
+        .form-section.section-collapsed .section-title .section-toggle-arrow {
+            transform: rotate(-90deg);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .employer-main-fields {
+            grid-template-columns: 160px 2fr 1.5fr 100px 1.2fr 100px;
+            padding-left: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .employer-main-fields {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                padding-left: 0;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .phone-group {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .phone-group select,
+        .phone-group input[type="tel"] {
+            height: 44px;
+            min-height: 44px;
+            padding: 8px;
+        }
+
+        .relationship-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .relationship-input select {
+            flex: 1;
+            max-width: 250px;
+        }
+
+        .deduction-file-group {
+            position: relative;
+            display: inline-block;
+            width: 160px;
+        }
+
+        .deduction-file-input {
+            text-align: left;
+            width: 160px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 2px solid #888;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        /* הגדלת ה-calendar popup בלבד - באמצעות CSS על ה-shadow DOM */
+        input[type="date"] {
+            font-size: 1.2em;
+        }
+        
+        /* הגדלת ה-calendar picker indicator */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+
+        input.error,
+        select.error {
+            border-color: #e74c3c;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        input.error + .error-message,
+        select.error + .error-message {
+            display: block;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border: 2px solid #888;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            background: #f5f5f5;
+            border-color: #2a5298;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            padding-right: 20px;
+        }
+
+        .non-tax-exempt-grants-wrap {
+            overflow-x: visible;
+            margin: 20px 0;
+        }
+
+        .non-tax-exempt-grants-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .grant-card {
+            position: relative;
+            border: 2px solid #2a5298;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f0f6ff 0%, #e8f0fc 100%);
+            padding: 14px 14px 14px 52px;
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.08);
+        }
+
+        .grant-card-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) minmax(0, 1fr) minmax(0, 1fr) minmax(106px, 121px);
+            grid-template-rows: auto;
+            gap: 12px 14px;
+            align-items: stretch;
+        }
+
+        @media (max-width: 992px) {
+            .grant-card-grid {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            }
+
+            .grant-total-stack {
+                grid-column: 1 / -1 !important;
+                border-inline-start: none !important;
+                border-top: 1px dashed #2a5298;
+                padding-top: 12px;
+                padding-inline-start: 0 !important;
+            }
+        }
+
+        .grant-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .grant-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .grant-field-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #1e3c72;
+            line-height: 1.25;
+        }
+
+        .grant-field input[type="text"],
+        .grant-field input[type="date"],
+        .grant-field select {
+            width: 100%;
+            min-width: 0;
+            height: 48px;
+            min-height: 48px;
+        }
+
+        .grant-money-input {
+            direction: ltr;
+            text-align: left;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .code-select {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .grant-total-stack {
+            grid-column: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            border-inline-start: 1px dashed rgba(42, 82, 152, 0.55);
+            padding-inline-start: 12px;
+            min-width: 0;
+        }
+
+        .grant-total-input {
+            font-weight: 700;
+            background: #fff !important;
+            cursor: default;
+            height: 48px;
+            min-height: 48px;
+        }
+
+        .grant-remove-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 6px 12px !important;
+            font-size: 0.85rem !important;
+        }
+
+        /* א.11 — כרטיסים כמו א.9 (מענקים): אותו סגנון ויזואלי */
+        .prp-grants-wrap {
+            overflow-x: visible;
+            margin: 20px 0;
+        }
+
+        .prp-grants-body {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .prp-card-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.58fr) minmax(0, 0.78fr) minmax(0, 0.9fr) minmax(96px, 118px);
+            gap: 12px 14px;
+            align-items: end;
+        }
+
+        .prp-card-grid > .grant-total-stack.prp-total-stack {
+            grid-column: 5;
+        }
+
+        .prp-pair-row {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            align-items: flex-end;
+            min-width: 0;
+        }
+
+        .prp-pair-row .grant-field {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .prp-code-field .prp-code-split {
+            display: flex;
+            flex-direction: column;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            min-width: 0;
+            border: 1px solid #c5cedd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            box-sizing: border-box;
+        }
+
+        .prp-code-field .prp-code-select {
+            flex: 2 1 0;
+            min-height: 0;
+            width: 100%;
+            margin: 0;
+            padding: 2px 8px;
+            border: none;
+            border-bottom: 1px solid #d8dee8;
+            border-radius: 0;
+            height: auto;
+            min-height: 0;
+            font-size: 0.84rem;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .prp-code-field .prp-payment-type-band {
+            flex: 1 1 0;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 0 6px;
+            background: #e8eef8;
+            font-size: 0.72rem;
+            font-weight: 700;
+            line-height: 1.15;
+            text-align: center;
+            color: #1e3c72;
+            box-sizing: border-box;
+        }
+
+        .prp-code-field .prp-type-30-num {
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.06em;
+            font-size: 0.85rem;
+        }
+
+        .prp-total-stack input.grant-money-input {
+            font-weight: 700;
+            background: #fafcfe !important;
+        }
+
+        .prp-grant-card {
+            padding-inline-start: 68px;
+        }
+
+        .section-summary-list {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .section-summary-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 190px;
+            gap: 12px;
+            align-items: center;
+            border: 1px solid #b8bfcc;
+            border-radius: 6px;
+            background: #f0f0f0;
+            padding: 8px 10px;
+        }
+        .section-summary-total {
+            display: flex;
+            flex-direction: row;
+            grid-template-columns: minmax(0, 1fr) 190px;
+            gap: 12px;
+            align-items: center;
+            border: 1px solid #b8bfcc;
+            border-radius: 6px;
+            background: #f0f0f0;
+            padding: 8px 10px;
+            max-width: 97%;
+            margin: 10px auto;
+        }
+        .section-summary-label {
+            font-weight: 700;
+            color: #1f1f1f;
+            font-size: 0.95rem;
+            line-height: 1.25;
+        }
+
+        .section-summary-value {
+            width: 100%;
+            height: 44px;
+            min-height: 44px;
+            text-align: left;
+            direction: ltr;
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 2px solid #b9b9b9;
+            background: #fff;
+            padding: 8px 12px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 992px) {
+            .prp-card-grid {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            }
+
+            .prp-card-grid .prp-pair-row {
+                grid-column: 1 / -1;
+            }
+
+            .prp-card-grid .prp-code-field {
+                grid-column: 1 / -1;
+            }
+
+            .prp-card-grid > .grant-total-stack.prp-total-stack {
+                grid-column: 1 / -1;
+                border-inline-start: none !important;
+                border-top: 1px dashed rgba(42, 82, 152, 0.55);
+                padding-top: 12px;
+                padding-inline-start: 0 !important;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #taxExemptGrantsTable td:nth-child(2) {
+            min-width: 130px;
+        }
+
+        #taxExemptGrantsTable td:nth-child(2) input {
+            width: 130px;
+        }
+
+        #taxExemptGrantsTable input[type="text"],
+        #taxExemptGrantsTable select {
+            height: 48px;
+            min-height: 48px;
+        }
+
+        #taxExemptGrantsTable tfoot td {
+            background: #edf3fb;
+            border-top: 2px solid #8fb2d4;
+            font-weight: 700;
+            padding: 8px;
+        }
+
+        #taxExemptGrantsTable {
+            table-layout: fixed;
+        }
+
+        #taxExemptGrantsTable th:nth-child(1),
+        #taxExemptGrantsTable td:nth-child(1) {
+            width: 31%;
+        }
+
+        #taxExemptGrantsTable th:nth-child(2),
+        #taxExemptGrantsTable td:nth-child(2) {
+            width: 14%;
+        }
+
+        #taxExemptGrantsTable th:nth-child(3),
+        #taxExemptGrantsTable td:nth-child(3),
+        #taxExemptGrantsTable th:nth-child(4),
+        #taxExemptGrantsTable td:nth-child(4) {
+            width: 22%;
+        }
+
+        #taxExemptGrantsTable th:nth-child(5),
+        #taxExemptGrantsTable td:nth-child(5) {
+            width: 11%;
+        }
+
+        #taxExemptGrantsTable .a10-total-label {
+            text-align: right;
+            color: #1f1f1f;
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
+
+        #taxExemptGrantsTable .a10-total-cell {
+            min-width: 0;
+        }
+
+        #taxExemptGrantsTable .a10-total-input {
+            width: 100%;
+            height: 48px;
+            min-height: 48px;
+            direction: ltr;
+            text-align: left;
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 2px solid #b9b9b9;
+            background: #fff;
+            padding: 8px 10px;
+            box-sizing: border-box;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-add {
+            background: #27ae60;
+            color: white;
+            margin: 10px 20px 0px 0px;
+        }
+
+        .btn-add:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .finalize-form-row {
+            margin-top: 18px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-finish {
+            background: #1f8f45;
+            color: #fff;
+            min-width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .btn-finish:hover {
+            background: #6690dd;
+        }
+
+        .btn-remove {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        .btn-remove:hover {
+            background: #c0392b;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 82, 152, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .signature-section {
+            background: #f8f9fa;
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 8px;
+            border: 2px dashed #888;
+        }
+
+        .signature-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #666;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-right: 4px solid #2a5298;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-content {
+                width: 100%;
+            }
+
+            .header-controls {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+
+        /* התאמות רספונסיביות לטבלאות וסיכומים במסכים צרים */
+        @media (max-width: 992px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 10px;
+            }
+
+            .form-section {
+                padding: 20px 14px;
+            }
+
+            #taxExemptGrantsTable {
+                table-layout: auto;
+            }
+
+            #taxExemptGrantsTable th:nth-child(1),
+            #taxExemptGrantsTable td:nth-child(1),
+            #taxExemptGrantsTable th:nth-child(2),
+            #taxExemptGrantsTable td:nth-child(2),
+            #taxExemptGrantsTable th:nth-child(3),
+            #taxExemptGrantsTable td:nth-child(3),
+            #taxExemptGrantsTable th:nth-child(4),
+            #taxExemptGrantsTable td:nth-child(4),
+            #taxExemptGrantsTable th:nth-child(5),
+            #taxExemptGrantsTable td:nth-child(5) {
+                width: auto;
+            }
+
+            #taxExemptGrantsTable td:nth-child(2) {
+                min-width: 0;
+            }
+
+            #taxExemptGrantsTable td:nth-child(2) input {
+                width: 100%;
+                min-width: 0;
+            }
+
+            #taxExemptGrantsTable .a10-total-label {
+                white-space: normal;
+                font-size: 0.86rem;
+            }
+
+            .section-summary-total {
+                flex-direction: column;
+                align-items: stretch;
+                max-width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .optional {
+            color: #95a5a6;
+            font-size: 0.85em;
+            font-weight: normal;
+        }
+
+        .salary-integer-input {
+            direction: ltr;
+            text-align: left;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .adaptive-text-input {
+            transition: font-size 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .uniform-salary-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 0.88rem;
+            color: #444;
+        }
+
+        .uniform-salary-row input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .uniform-salary-row label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .salary-integer-input.salary-readonly-sync {
+            background: #f4f6fa;
+            cursor: default;
+        }
+
+        .operation-panel {
+            margin: 10px 24px 0;
+            border: 1px solid #d9e3f2;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f8fbff 0%, #eef4fc 100%);
+            box-shadow: 0 6px 18px rgba(30, 60, 114, 0.08);
+            overflow: hidden;
+            transform: translateY(-10px);
+        }
+
+        .operation-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 18px;
+            cursor: pointer;
+        }
+
+        .operation-panel-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .operation-panel-subtitle {
+            font-size: 0.82rem;
+            color: #5f6f89;
+        }
+
+        .operation-panel-toggle {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #c7d7ee;
+            border-radius: 50%;
+            background: white;
+            color: #1e3c72;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .operation-panel.collapsed .operation-panel-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .operation-panel-body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 0 18px 18px;
+            border-top: 1px solid #d9e3f2;
+        }
+
+        .operation-panel.collapsed .operation-panel-body {
+            display: none;
+        }
+
+        .operation-action-btn {
+            min-width: 170px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 1px solid #c7d7ee;
+            background: white;
+            color: #1e3c72;
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .operation-action-btn:hover {
+            background: #edf4ff;
+            border-color: #2a5298;
+        }
+
+        .operation-action-btn.primary {
+            background: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+
+        .operation-action-btn.primary:hover {
+            background: #1f427d;
+        }
+
+        .operation-action-btn.secondary {
+            background: #eef4ff;
+            color: #1e3c72;
+            border-color: #b8caea;
+        }
+
+        .operation-action-btn.secondary:hover {
+            background: #dfeafc;
+            border-color: #2a5298;
+        }
+
+        .operation-action-btn.danger {
+            color: #a12b2b;
+            border-color: #efc1c1;
+            background: #fff8f8;
+        }
+
+        .operation-action-btn.danger:hover {
+            background: #ffecec;
+            border-color: #df8f8f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="position: relative;">
+        <div class="page-number-header">דף 1 מתוך 4</div>
+        <div class="sticky-top-shell">
+            <div class="header">
+                <img alt="" src="michpal-removebg-preview.png" width="120px">
+                <div class="header-content">
+                    <h1>טופס 161 - הודעה על פרישה מעבודה</h1>
+                    <p>חלק א' - הודעת המעסיק</p>
+                </div>
+                <div class="header-controls">
+                    <div class="form-type-group">
+                        <label>טופס זה:</label>
+                        <div class="form-type-checkboxes">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="formTypeOriginal" name="formType" value="original" checked>
+                                <label for="formTypeOriginal">מקורי</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="formTypeAmended" name="formType" value="amended">
+                                <label for="formTypeAmended">מתוקן</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="previous-form-date" id="previousFormDateContainer" style="display: none;">
+                        <label for="previousFormDate">טופס קודם מתאריך:</label>
+                        <input type="date" id="previousFormDate" name="previousFormDate" form="form161">
+                    </div>
+                    <button type="button" id="openFormGuideBtn" class="btn-guide-header" title="מדריך למילוי, הסברים לפי חלקים וצפייה בטופס PDF">מדריך למילוי</button>
+                </div>
+            </div>
+
+            <div id="operationPanel" class="operation-panel">
+                <div id="operationPanelHeader" class="operation-panel-header" role="button" tabindex="0" aria-expanded="true">
+                    <div>
+                        <div class="operation-panel-title">לוח הפעלה</div>
+                        <div class="operation-panel-subtitle">שמירת טופס ביניים, יצירת PDF/XML ואיפוס הטופס</div>
+                    </div>
+                    <button type="button" id="operationPanelToggle" class="operation-panel-toggle" aria-label="פתיחה או סגירה של לוח ההפעלה">▼</button>
+                </div>
+                <div class="operation-panel-body">
+                    <button type="button" id="saveJsonBtn" class="operation-action-btn">שמירת טופס</button>
+                    <button type="button" id="loadJsonBtn" class="operation-action-btn">טעינת טופס מ־JSON</button>
+                    <button type="button" id="savePdfBtn" class="operation-action-btn secondary">שמירת טופס כ־PDF</button>
+                    <button type="submit" form="form161" class="operation-action-btn primary">יצירת קובץ XML</button>
+                    <button type="button" id="resetFormBtn" class="operation-action-btn danger">איפוס הטופס</button>
+                    <input type="file" id="loadJsonInput" accept=".json,application/json" hidden>
+                </div>
+            </div>
+        </div>
+
+        <form id="form161" novalidate>
+                        <!-- חלק א.1 - פרטי העובד -->
+                        <div class="form-section">
+                            <h2 class="section-title">א.1 - פרטי העובד</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="employeeIdNumber">מספר זהות <span class="required">*</span></label>
+                                    <input type="text" id="employeeIdNumber" name="employeeIdNumber" 
+                                           pattern="\d{9}" maxlength="9" required>
+                                    <span class="error-message">מספר זהות חייב להיות 9 ספרות</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="firstName">שם פרטי <span class="required">*</span></label>
+                                    <input type="text" id="firstName" name="firstName" 
+                                           minlength="2" maxlength="30" required>
+                                    <span class="error-message">שם פרטי חייב להיות בין 2-30 תווים בעברית</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">שם משפחה <span class="required">*</span></label>
+                                    <input type="text" id="lastName" name="lastName" 
+                                           minlength="2" maxlength="30" required>
+                                    <span class="error-message">שם משפחה חייב להיות בין 2-30 תווים בעברית</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeBirthDate">תאריך לידה</label>
+                                    <input type="date" id="employeeBirthDate" name="employeeBirthDate">
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="employeeStreet">רחוב</label>
+                                    <input type="text" id="employeeStreet" name="employeeStreet" maxlength="100">
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeHouseNumber">מספר בית/דירה</label>
+                                    <input type="text" id="employeeHouseNumber" name="employeeHouseNumber" maxlength="20">
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeCity">יישוב</label>
+                                    <input type="text" id="employeeCity" name="employeeCity" maxlength="50">
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeZipCode">מיקוד</label>
+                                    <input type="text" id="employeeZipCode" name="employeeZipCode" 
+                                           pattern="\d{5,7}" maxlength="7">
+                                    <span class="error-message">מיקוד חייב להיות 5-7 ספרות</span>
+                                </div>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>מספר טלפון/נייד</label>
+                                    <div class="phone-group">
+                                        <select id="employeePhonePrefix" name="employeePhonePrefix" form="form161">
+                                            <option value="">קידומת</option>
+                                            <option value="050">050</option>
+                                            <option value="052">052</option>
+                                            <option value="053">053</option>
+                                            <option value="054">054</option>
+                                            <option value="057">057</option>
+                                            <option value="077">077</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                        </select>
+                                        <input type="tel" id="employeePhoneNumber" name="employeePhoneNumber" 
+                                               placeholder="מספר" pattern="\d{7}" maxlength="7">
+                                    </div>
+                                    <span class="error-message">מספר טלפון לא תקין</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="employeeEmail">כתובת דואר אלקטרוני</label>
+                                    <input type="email" id="employeeEmail" name="employeeEmail" maxlength="70">
+                                    <span class="error-message">כתובת דואר אלקטרוני לא תקינה</span>
+                                </div>
+                            </div>
+            
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="holderOfControllingInterest" name="holderOfControllingInterest">
+                                <label for="holderOfControllingInterest">העובד הוא בעל שליטה (3) במעסיק</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <div class="relationship-input">
+                                    <input type="checkbox" id="relativeHolderOfControllingInterest" name="relativeHolderOfControllingInterest">
+                                    <label for="relativeHolderOfControllingInterest">העובד הוא קרוב (4) של בעל השליטה במעסיק, הקירבה:</label>
+                                    <select id="relationshipType" name="relationshipType" form="form161" disabled>
+                                        <option value="">בחר קירבה</option>
+                                        <option value="בן זוג">בן זוג</option>
+                                        <option value="אח">אח</option>
+                                        <option value="אחות">אחות</option>
+                                        <option value="הורה">הורה</option>
+                                        <option value="הורי הורה">הורי הורה</option>
+                                        <option value="צאצא">צאצא</option>
+                                        <option value="צאצא של בן הזוג">צאצא של בן הזוג</option>
+                                        <option value="בן/בת זוגו של האח">בן/בת זוגו של האח</option>
+                                        <option value="בן/בת זוגו של האחות">בן/בת זוגו של האחות</option>
+                                        <option value="בן/בת זוגו של ההורה">בן/בת זוגו של ההורה</option>
+                                        <option value="בן/בת זוגו של צאצא">בן/בת זוגו של צאצא</option>
+                                        <option value="בן/בת זוגו של הורה הורה">בן/בת זוגו של הורה הורה</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+            <!-- חלק א.2 - פרטי המעסיק -->
+            <div class="form-section">
+                <h2 class="section-title">א.2 - פרטי המעסיק</h2>
+                <div class="form-grid employer-main-fields">
+                    <div class="form-group">
+                        <label for="employerDeductionFile">מספר תיק ניכויים <span class="required">*</span></label>
+                        <div class="deduction-file-group">
+                            <input type="text" id="employerDeductionFile" name="employerDeductionFile" 
+                                   class="deduction-file-input"
+                                   pattern="9\d{8}" maxlength="9" placeholder="" 
+                                   required>
+                        </div>
+                        <span class="error-message">מספר תיק ניכויים חייב להיות 9 ספרות המתחילות ב-9 (8 ספרות נוספות)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="employerName">שם המעסיק</label>
+                        <input type="text" id="employerName" name="employerName">
+                    </div>
+                    <div class="form-group">
+                        <label for="employerStreet">רחוב</label>
+                        <input type="text" id="employerStreet" name="employerStreet" maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="employerHouseNumber">בית/דירה</label>
+                        <input type="text" id="employerHouseNumber" name="employerHouseNumber" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="employerCity">יישוב</label>
+                        <input type="text" id="employerCity" name="employerCity" maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="employerZipCode">מיקוד</label>
+                        <input type="text" id="employerZipCode" name="employerZipCode" 
+                               pattern="\d{5,7}" maxlength="7">
+                        <span class="error-message">מיקוד חייב להיות 5-7 ספרות</span>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="margin-top: 10px;">
+                    <div class="form-group">
+                        <label for="contactEmail">כתובת דואר אלקטרוני של איש הקשר</label>
+                        <input type="email" id="contactEmail" name="contactEmail" maxlength="70">
+                        <span class="error-message">כתובת דואר אלקטרוני לא תקינה</span>
+                    </div>
+                    <div class="form-group">
+                        <label>מספר טלפון/נייד של איש הקשר <span class="required">*</span></label>
+                        <div class="phone-group">
+                            <select id="contactPhonePrefix" name="contactPhonePrefix" form="form161" required>
+                                <option value="">קידומת</option>
+                                <option value="050">050</option>
+                                <option value="052">052</option>
+                                <option value="053">053</option>
+                                <option value="053">054</option>
+                                <option value="057">057</option>
+                                <option value="077">077</option>
+                            </select>
+                            <input type="tel" id="contactPhoneNumber" name="contactPhoneNumber" 
+                                   placeholder="מספר" pattern="\d{7}" maxlength="7" required>
+                        </div>
+                        <span class="error-message">מספר טלפון לא תקין</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- חלק א.3 - סיבת פרישה -->
+            <div class="form-section">
+                <h2 class="section-title">א.3 - סיבת הפרישה</h2>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="retirementReason1" name="retirementReason" value="1" required>
+                        <label for="retirementReason1">1. יציאה לגימלאות, פיטורין או התפטרות</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="retirementReason2" name="retirementReason" value="2">
+                        <label for="retirementReason2">2. פטירה</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="retirementReason3" name="retirementReason" value="3">
+                        <label for="retirementReason3">3. נכות יציבה של 75% לפחות</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- חלק א.4 - תקופת העבודה -->
+            <div class="form-section">
+                <h2 class="section-title">א.4 - תקופת העבודה</h2>
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="employmentStartDate">תאריך התחלת העבודה <span class="required">*</span></label>
+                        <input type="date" id="employmentStartDate" name="employmentStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="employmentRetirementDate">תאריך הפרישה<span class="required">*</span></label>
+                        <input type="date" id="employmentRetirementDate" name="employmentRetirementDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>תקופת העבודה</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="number" id="employmentPeriodDays" name="employmentPeriodDays" 
+                                       min="0" max="365" style="padding: 8px;">
+                                <label for="employmentPeriodDays" style="font-size: 0.85em; font-weight: normal; margin-top: 5px; text-align: center;">בימים</label>
+                            </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="number" id="employmentPeriodYears" name="employmentPeriodYears" 
+                                       min="0" max="100" style="padding: 8px;">
+                                <label for="employmentPeriodYears" style="font-size: 0.85em; font-weight: normal; margin-top: 5px; text-align: center;">בשנים</label>
+                            </div>
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="number" id="employmentPeriodPartialYears" name="employmentPeriodPartialYears" 
+                                       min="0" max="365" style="padding: 8px;">
+                                <label for="employmentPeriodPartialYears" style="font-size: 0.85em; font-weight: normal; margin-top: 5px; text-align: center;">חלקי שנים</label>
+                            </div>
+                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- חלק א.5 - תקופות עבודה לא רציפות -->
+            <div class="form-section">
+                <h2 class="section-title">א.5 - תקופות עבודה לא רציפות / שינויים בשיעורי המשרה / הפחתות שכר</h2>
+                <div class="info-box">
+                    <p><strong>חלק זה אינו חובה אם לא היו שינויים בשכר או בשיעור המשרה והעובד עבד ברצף. </strong></p>
+                    <p><strong>הוספת תקופות עבודה:</strong> לחץ על כפתור "הוסף תקופה" כדי להוסיף תקופות עבודה נוספות. </p>
+                </div>
+                <div id="workPeriodsContainer">
+                    <div class="table-container">
+                        <table id="workPeriodsTable">
+                            <thead>
+                                <tr>
+                                    <th>תאריך התחלה</th>
+                                    <th>תאריך סיום</th>
+                                    <th>שיעור המשרה (%)</th>
+                                    <th>משכורת אחרונה לתקופה</th>
+                                    <th>פעולות</th>
+                                </tr>
+                            </thead>
+                            <tbody id="workPeriodsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-add" onclick="addWorkPeriod()">+ הוסף תקופה</button>
+                </div>
+            </div>
+
+            <!-- חלק א.6 - משכורת -->
+            <div class="form-section">
+                <h2 class="section-title">א.6 - משכורת העובד</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fullLastSalaryBeforeRetirement">משכורת חודשית אחרונה מלאה לפני הפרישה <span class="required">*</span></label>
+                        <input type="text" class="salary-integer-input" id="fullLastSalaryBeforeRetirement" name="fullLastSalaryBeforeRetirement"
+                               inputmode="decimal" autocomplete="off" maxlength="14" required>
+                        <span class="error-message">יש להזין סכום תקין עד שתי ספרות אחרי הנקודה, בפורמט ‎#,###.00‎</span>
+                        <div class="uniform-salary-row">
+                            <input type="checkbox" id="uniformSalaryCheckbox" name="uniformSalaryCheckbox" form="form161">
+                            <label for="uniformSalaryCheckbox">שכר אחיד</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastInsuredSalary">משכורת מבוטחת אחרונה <span class="required">*</span></label>
+                        <input type="text" class="salary-integer-input" id="lastInsuredSalary" name="lastInsuredSalary"
+                               inputmode="decimal" autocomplete="off" maxlength="14" required>
+                        <span class="error-message">יש להזין סכום תקין עד שתי ספרות אחרי הנקודה, בפורמט ‎#,###.00‎</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="severanceSalary"> משכורת - חבות פיצויים  <span class="required">*</span></label>
+                        <input type="text" class="salary-integer-input" id="severanceSalary" name="severanceSalary"
+                               inputmode="decimal" autocomplete="off" maxlength="14" required>
+                        <span class="error-message">יש להזין סכום תקין עד שתי ספרות אחרי הנקודה, בפורמט ‎#,###.00‎</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- חלק א.7 - פנסיה תקציבית -->
+            <div class="form-section">
+                <h2 class="section-title">א.7 - קצבה ממעסיק או משלם מטעמו (להלן: "פנסיה תקציבית"), בגין תקופת העבודה</h2>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="budgetaryPensionNone" name="budgetaryPensionOption" value="none" checked>
+                        <label for="budgetaryPensionNone">העובד לא זכאי לפנסיה תקציבית</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="budgetaryPensionEntitled" name="budgetaryPensionOption" value="entitled">
+                        <label for="budgetaryPensionEntitled">העובד זכאי לפנסיה תקציבית</label>
+                    </div>
+                </div>
+                <div id="budgetaryPensionDetails" style="display: none; margin-top: 20px;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="entitlementDate">תאריך זכאות</label>
+                            <input type="date" id="entitlementDate" name="entitlementDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="salaryForBudgetaryPensionCalculation">המשכורת לפיה מחושבת הפנסיה התקציבית</label>
+                            <input type="number" id="salaryForBudgetaryPensionCalculation" name="salaryForBudgetaryPensionCalculation" 
+                                   min="1" max="999999999">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- חלק א.8 - מענקי פרישה לשיעורין -->
+            <div class="form-section">
+                <h2 class="section-title">א.8 - מענקי פרישה לשיעורין שישולמו בשנים שלאחר הפרישה</h2>
+                <div class="info-box">
+                    <p><strong>הערה:</strong> אין לכלול תשלומים אלה בחלק א.9. ניתן להוסיף עד 6 תשלומים.</p>
+                </div>
+                <div id="installmentsContainer">
+                    <div class="table-container">
+                        <table id="installmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>תאריך תשלום</th>
+                                    <th>סכום לתשלום</th>
+                                    <th>פעולות</th>
+                                </tr>
+                            </thead>
+                            <tbody id="installmentsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-add" onclick="addInstallment()">+ הוסף תשלום</button>
+                </div>
+            </div>
+
+            <!-- הפרדה בין דף 1 לדף 2 -->
+            <div class="page-break">
+                <div class="page-break-content">
+                    <span class="page-break-circle"></span>
+                    <span class="page-break-circle"></span>
+                    <span class="page-break-circle"></span>
+                </div>
+            </div>
+
+            <!-- חלק א.9 - מענקים לא חויבו במס -->
+            <div class="form-section" style="position: relative;">
+                <div class="page-number">דף 2 מתוך 4</div>
+                <h2 class="section-title">א.9 - פירוט המענקים בגין תקופת העבודה (למעט תשלומים שחויבו במס)</h2>
+                <div id="nonTaxExemptGrantsContainer">
+                    <p class="optional" style="margin-bottom: 10px;">כל רשומת משלם מוצגת בכרטיס דו-שורתי — ללא גלילה אופקית. סכומים מוצגים עם פסיק לאלפים ונקודה עשרונית (שתי ספרות).</p>
+                    <div class="non-tax-exempt-grants-wrap">
+                        <div id="nonTaxExemptGrantsBody" class="non-tax-exempt-grants-body"></div>
+                    </div>
+                    <div class="section-summary-list" aria-live="polite">
+                        <div class="section-summary-item">
+                            <div class="section-summary-label">סה״כ חלק א.9:</div>
+                            <input type="text" id="partA9TotalDisplay" class="section-summary-value" value="0.00" readonly tabindex="-1">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-add" onclick="addNonTaxExemptGrant()">+ הוסף מענק</button>
+                </div>
+            </div>
+
+            <!-- חלק א.10 - הפקדות חויבו במס -->
+            <div class="form-section">
+                <h2 class="section-title">א.10 - הפקדות המעסיק למרכיב הפיצויים (חויבו במס)</h2>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="taxExemptNo" name="taxExemptOption" value="no" checked>
+                        <label for="taxExemptNo">העובד לא חויב במס</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="taxExemptYes" name="taxExemptOption" value="yes">
+                        <label for="taxExemptYes">העובד חויב במס - להלן התשלומים</label>
+                    </div>
+                </div>
+                <div id="taxExemptGrantsContainer" style="display: none; margin-top: 20px;">
+                    <div class="table-container">
+                        <table id="taxExemptGrantsTable">
+                            <thead>
+                                <tr>
+                                    <th>שם המשלם</th>
+                                    <th>תיק ניכויים משלם</th>
+                                    <th>התשלומים שחויבו במס (נומינלי)</th>
+                                    <th>התשלומים שחויבו במס (ריאלי)</th>
+                                    <th>פעולות</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taxExemptGrantsBody">
+                            </tbody>
+                            <tfoot>
+                                <tr id="partA10SummaryRow" style="display: none;">
+                                    <td class="a10-total-label">סה״כ חלק א.10:</td>
+                                    <td></td>
+                                    <td class="a10-total-cell">
+                                        <input type="text" id="partA10NominalTotalDisplay" class="a10-total-input grant-money-input" value="0.00" readonly tabindex="-1">
+                                    </td>
+                                    <td class="a10-total-cell">
+                                        <input type="text" id="partA10RealTotalDisplay" class="a10-total-input grant-money-input" value="0.00" readonly tabindex="-1">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-add" onclick="addTaxExemptGrant()">+ הוסף הפקדה</button>
+                </div>
+            </div>
+
+            <!-- חלק א.11 - קצבה טרם פרישה -->
+            <div class="form-section">
+                <h2 class="section-title">א.11 - קצבה טרם הפרישה בגין תקופת העבודה</h2>
+                <div id="preRetirementPensionContainer">
+                    <div class="prp-grants-wrap non-tax-exempt-grants-wrap">
+                        <div id="preRetirementPensionBody" class="prp-grants-body non-tax-exempt-grants-body">
+                        </div>
+                    </div>
+                    <div class="section-summary-list" aria-live="polite">
+                        <div id="partA11SummaryRow" class="section-summary-item" style="display: none;">
+                            <div class="section-summary-label">סה״כ חלק א.11:</div>
+                            <input type="text" id="partA11TotalDisplay" class="section-summary-value" value="0.00" readonly tabindex="-1">
+                        </div>
+                        <button type="button" class="btn btn-add" onclick="addPreRetirementPension()">+ הוסף קצבה</button>
+                   </div>
+                </div>
+            </div>
+            <div id="partA9ToA11SummaryRow" class="section-summary-total" style="display: none;">
+                <div class="section-summary-label">סכום המענק הכולל - סה״כ חלקים א.9, א.10, א.11:</div>
+                <input type="text" id="partA9ToA11TotalDisplay" class="section-summary-value" value="0.00" readonly tabindex="-1">
+            </div>
+
+            <!-- חלק א.12 - התקרה לרצף קצבה ברירת מחדל -->
+            <div class="form-section">
+                <h2 class="section-title">א.12 - התקרה לרצף קצבה ברירת מחדל (יש לסמן V לפי העניין)</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <p style="margin-bottom: 10px;">
+                        מתוך סכום המענק הכולל, סך הסכומים העומדים לרשות העובד שהופקדו ע"י המעסיק במרכיב הפיצויים בכל קופות הגמל לקצבה, אינו עולה על התקרה הנקובה בסעיף 9(א)(1) לפקודה (להלן: "רצף קצבה ברירת מחדל").
+                    </p>
+                    <div style="display: flex; gap: 20px; margin-top: 10px;">
+                        <div class="checkbox-group">
+                            <input type="radio" id="ceilingOption1No" name="ceilingOption1" value="no">
+                            <label for="ceilingOption1No">אינו עולה</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="radio" id="ceilingOption1Yes" name="ceilingOption1" value="yes">
+                            <label for="ceilingOption1Yes">עולה</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p style="margin-bottom: 10px;">
+                        המענקים המדווחים בחלק א.9 כוללים מענקים ממשלמים שאינם קופות גמל לקצבה, כדוגמת מעסיק וקופה מרכזית לפיצויים.
+                    </p>
+                    <div style="display: flex; gap: 20px; margin-top: 10px;">
+                        <div class="checkbox-group">
+                            <input type="radio" id="grantsIncludeNonPensionYes" name="grantsIncludeNonPension" value="yes">
+                            <label for="grantsIncludeNonPensionYes">כן</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="radio" id="grantsIncludeNonPensionNo" name="grantsIncludeNonPension" value="no">
+                            <label for="grantsIncludeNonPensionNo">לא</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- חלק א.13 - סכומים מרביים לפרישה -->
+            <div class="form-section">
+                <h2 class="section-title">א.13 - סכומים מרביים לפרישה - נתוני עזר לעובד</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>הסכום המרבי</th>
+                                <th>סכום המענק הכולל</th>
+                                <th>סכום לרצף קצבה</th>
+                                <th>סכום לרצף פיצויים</th>
+                                <th>סכום המענק הפטור לפי סעיף 9(א)</th>
+                                <th>סכום המענק החייב במס</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>הסכום המרבי</strong></td>
+                                <td>
+                                    <input type="text" id="maxTotalGrantAmount" name="maxTotalGrantAmount"
+                                           class="salary-integer-input" inputmode="decimal" form="form161" style="width: 100%;" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" id="maxPensionContinuityAmount" name="maxPensionContinuityAmount"
+                                           class="salary-integer-input" inputmode="decimal" form="form161" style="width: 100%;" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" id="maxSeveranceContinuityAmount" name="maxSeveranceContinuityAmount"
+                                           class="salary-integer-input" inputmode="decimal" autocomplete="off" maxlength="14"
+                                           form="form161" style="width: 100%;">
+                                    <span class="error-message" style="display: none;">יש להזין סכום תקין בפורמט ‎#,###.00‎</span>
+                                </td>
+                                <td>
+                                    <input type="text" id="maxExemptGrantAmount" name="maxExemptGrantAmount"
+                                           class="salary-integer-input" inputmode="decimal" autocomplete="off" maxlength="14"
+                                           form="form161" style="width: 100%;">
+                                    <span class="error-message" style="display: none;">יש להזין סכום תקין בפורמט ‎#,###.00‎</span>
+                                </td>
+                                <td>
+                                    <input type="text" id="maxTaxableGrantAmount" name="maxTaxableGrantAmount"
+                                           class="salary-integer-input" inputmode="decimal" form="form161" style="width: 100%;" readonly>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="finalize-form-row">
+                <button type="button" id="finalizeFormBtn" class="btn btn-finish">סיימתי</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="form161-guide.js"></script>
+    <script src="form161.js"></script>
+</body>
+</html>
+
